@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model company {
+  id           String        @id
+  avatar       String
+  name         String
+  documentType String
+  document     String
+  email        String
+  phone        String
+  password     String
+  companyUser  companyUser[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  @@unique([document, email])
+  @@map("companies")
+}
+
+model companyUser {
+  id           String @id
+  avatar       String
+  companyId    String
+  name         String
+  documentType String
+  document     String
+  phone        String
+  email        String
+  password     String
+  lat          String
+  long         String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  company         company           @relation(fields: [companyId], references: [id])
+  companyUserRole companyUserRole[]
+  task            task[]
+
+  @@unique([document, email])
+}
+
+model companyRequester {
+  id       String  @id
+  name     String
+  avatar   String?
+  email    String  @unique
+  password String
+  task     task[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+}
+
+model companyUserRole {
+  id            String @id
+  companyUserId String
+  roleId        String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  companyUser companyUser @relation(fields: [companyUserId], references: [id])
+  role        role        @relation(fields: [roleId], references: [id])
+
+  @@unique([roleId, companyUserId])
+}
+
+model role {
+  id          String @id
+  name        String
+  description String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  companyUserRole companyUserRole[]
+}
+
+model category {
+  id          String  @id
+  title       String
+  description String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+  task      task[]
+}
+
+model evidence {
+  id   String @id
+  path String
+  url  String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  taskId String
+  task   task   @relation(fields: [taskId], references: [id])
+}
+
+model task {
+  id                 String     @id
+  companyRequesterId String
+  categoryId         String
+  companyUserId      String?
+  status             String     @default("created")
+  title              String
+  description        String
+  evidences          evidence[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  companyUser      companyUser?     @relation(fields: [companyUserId], references: [id])
+  category         category         @relation(fields: [categoryId], references: [id])
+  companyRequester companyRequester @relation(fields: [companyRequesterId], references: [id])
+}
+
+model user {
+  id        String  @id
+  email     String  @unique
+  avatar    String?
+  password  String
+  admin     Boolean @default(false)
+  moderator Boolean @default(false)
+  support   Boolean @default(true)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+}
