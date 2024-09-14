@@ -10,9 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model user {
+  id        String  @id
+  avatarId  String?
+  email     String  @unique
+  name      String
+  password  String
+  avatar    avatar? @relation(fields: [avatarId], references: [id])
+  admin     Boolean @default(false)
+  moderator Boolean @default(false)
+  support   Boolean @default(true)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+}
+
 model company {
   id           String        @id
-  avatar       String
+  avatar       avatar?       @relation(fields: [avatarId], references: [id])
   name         String
   documentType String
   document     String
@@ -24,15 +40,16 @@ model company {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt()
   deletedAt DateTime?
+  avatarId  String?
 
   @@unique([document, email])
   @@map("companies")
 }
 
 model companyUser {
-  id           String @id
-  avatar       String
+  id           String  @id
   companyId    String
+  avatar       avatar? @relation(fields: [avatarId], references: [id])
   name         String
   documentType String
   document     String
@@ -49,17 +66,19 @@ model companyUser {
   company         company           @relation(fields: [companyId], references: [id])
   companyUserRole companyUserRole[]
   task            task[]
+  avatarId        String
 
   @@unique([document, email])
 }
 
 model companyRequester {
   id       String  @id
+  avatarId String?
   name     String
-  avatar   String?
   email    String  @unique
   password String
   task     task[]
+  avatar   avatar? @relation(fields: [avatarId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt()
@@ -104,6 +123,20 @@ model category {
   task      task[]
 }
 
+model avatar {
+  id   String @id
+  path String
+  url  String
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt()
+  deletedAt        DateTime?
+  companyRequester companyRequester[]
+  company          company[]
+  user             user[]
+  companyUser      companyUser[]
+}
+
 model evidence {
   id   String @id
   path String
@@ -134,18 +167,4 @@ model task {
   companyUser      companyUser?     @relation(fields: [companyUserId], references: [id])
   category         category         @relation(fields: [categoryId], references: [id])
   companyRequester companyRequester @relation(fields: [companyRequesterId], references: [id])
-}
-
-model user {
-  id        String  @id
-  email     String  @unique
-  avatar    String?
-  password  String
-  admin     Boolean @default(false)
-  moderator Boolean @default(false)
-  support   Boolean @default(true)
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt()
-  deletedAt DateTime?
 }
