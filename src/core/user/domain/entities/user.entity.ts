@@ -1,8 +1,7 @@
 import { Entity } from "src/core/shared/entity/entity";
-import { Email } from "src/core/shared/valueObjects/email.vo";
 import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
 import { UserEntityValidator } from "../validators/user.validator";
-import { hash, hashSync } from "bcryptjs";
+import { hashSync } from "bcryptjs";
 
 export type UserEntityProps = {
   id?: string;
@@ -22,7 +21,7 @@ export type UserEntityProps = {
 export class UserEntity extends Entity {
   id?: Uuid;
   avatarId?: Uuid;
-  email: Email;
+  email: string;
   name: string;
   password?: string;
   admin: boolean;
@@ -38,7 +37,7 @@ export class UserEntity extends Entity {
 
     this.id = new Uuid(props.id);
     this.avatarId = props.avatarId && new Uuid(props.avatarId);
-    this.email = new Email(props.email);
+    this.email = props.email;
     this.name = props.name;
     this.password = props.password;
     this.admin = props.admin != undefined ? props.admin : false;
@@ -56,8 +55,8 @@ export class UserEntity extends Entity {
   toJSON() {
     return {
       id: this.id.value,
-      avatarId: this.avatarId.value,
-      email: this.email.value,
+      avatarId: this.avatarId?.value,
+      email: this.email,
       name: this.name,
       admin: this.admin,
       moderator: this.moderator,
@@ -72,11 +71,40 @@ export class UserEntity extends Entity {
     return new UserEntityValidator({
       name: this.name,
       password: this.password,
+      email: this.email,
     }).validate();
   }
   private hashPassword() {
     if (this.password) {
       this.password = hashSync(this.password, 10);
     }
+  }
+
+  changeEmail(value: string) {
+    this.email = value;
+    this.validate();
+  }
+
+  changePassword(value: string) {
+    this.password = value;
+    this.validate();
+    this.hashPassword();
+  }
+
+  changeName(value: string) {
+    this.name = value;
+    this.validate();
+  }
+
+  changeSupport(value: boolean) {
+    this.support = value;
+  }
+
+  changeModerator(value: boolean) {
+    this.moderator = value;
+  }
+
+  changeAdmin(value: boolean) {
+    this.admin = value;
   }
 }
