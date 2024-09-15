@@ -5,8 +5,8 @@ export class UserModelMapper {
   static toModel(user: UserEntity): Prisma.userUncheckedCreateInput {
     return {
       id: user.id.value,
-      avatarId: user.avatarId.value,
-      email: user.email.value,
+      avatarId: user.avatarId?.value,
+      email: user.email,
       name: user.name,
       password: user.password,
       admin: user.admin,

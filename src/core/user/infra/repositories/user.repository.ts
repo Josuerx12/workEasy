@@ -32,15 +32,15 @@ export class UserRepository implements IUserRepository {
       : null;
   }
 
-  insert(user: UserEntity): Promise<void> {
-    db.user.create({
+  async insert(user: UserEntity): Promise<void> {
+    await db.user.create({
       data: UserModelMapper.toModel(user),
     });
     return;
   }
 
-  update(user: UserEntity): Promise<void> {
-    db.user.update({
+  async update(user: UserEntity): Promise<void> {
+    await db.user.update({
       where: {
         id: user.id.value,
       },
@@ -49,8 +49,8 @@ export class UserRepository implements IUserRepository {
     return;
   }
 
-  delete(id: string): Promise<void> {
-    db.user.update({
+  async delete(id: string): Promise<void> {
+    await db.user.update({
       where: {
         id: id,
       },
