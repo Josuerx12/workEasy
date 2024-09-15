@@ -1,6 +1,8 @@
+import "express-async-errors";
 import express from "express";
 import cors from "cors";
 import { routes } from "./router";
+import { errorHandler } from "src/middlewares/errorHandler";
 
 export class Bootstrap {
   private app: express.Application;
@@ -14,6 +16,7 @@ export class Bootstrap {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(routes);
     this.app.use(cors());
+    this.app.use(errorHandler);
   }
 
   start() {
