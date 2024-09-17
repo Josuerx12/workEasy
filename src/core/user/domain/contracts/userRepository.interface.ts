@@ -1,10 +1,6 @@
+import { BaseRepository } from "src/core/shared/reporitory/baseRepository";
 import { UserEntity } from "../entities/user.entity";
 
-export interface IUserRepository {
-  getById(id: string): Promise<UserEntity>;
+export interface IUserRepository extends BaseRepository<UserEntity> {
   getByEmail(email: string): Promise<UserEntity>;
-  getAll(): Promise<UserEntity[]>;
-  insert(user: UserEntity): Promise<void>;
-  update(user: UserEntity): Promise<void>;
-  delete(id: string): Promise<void>;
 }
