@@ -31,8 +31,8 @@ model company {
   avatar       avatar?       @relation(fields: [avatarId], references: [id])
   name         String
   documentType String
-  document     String
-  email        String
+  document     String        @unique
+  email        String        @unique
   phone        String
   password     String
   companyUser  companyUser[]
@@ -52,9 +52,9 @@ model companyUser {
   avatar       avatar? @relation(fields: [avatarId], references: [id])
   name         String
   documentType String
-  document     String
+  document     String  @unique
   phone        String
-  email        String
+  email        String  @unique
   password     String
   lat          String
   long         String

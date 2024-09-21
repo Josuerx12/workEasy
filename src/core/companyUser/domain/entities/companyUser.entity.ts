@@ -1,56 +1,76 @@
 import { hashSync } from "bcryptjs";
 import { Entity } from "src/core/shared/entity/entity";
 import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
-import { CompanyEntityValidator } from "../validators/company.validator";
 import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
+import { CompanyUserEntityValidator } from "../validators/companyUser.validator";
+import { CompanyEntity } from "src/core/company/domain/entities/company.entity";
 
-export type CompanyEntityProps = {
+export type CompanyUserEntityProps = {
   id?: string;
+  companyId: string;
+  avatarId?: string;
   name: string;
   documentType: string;
   document: string;
   email: string;
   phone: string;
   password?: string;
+  lat?: string;
+  long?: string;
 
-  companyUser?: any[];
-  avatarId?: string;
-  avatar?: any;
+  company?: CompanyEntity;
+  avatar?: AvatarEntity;
+  tasks?: any[];
+  companyUserRoles?: any[];
 
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
 };
 
-export class CompanyEntity extends Entity {
-  id: Uuid;
+export class CompanyUserEntity extends Entity {
+  id?: Uuid;
+  companyId: Uuid;
+  avatarId?: Uuid;
   name: string;
   documentType: string;
   document: string;
   email: string;
   phone: string;
   password?: string;
+  lat?: string;
+  long?: string;
 
-  companyUser?: any[];
-  avatarId?: Uuid;
+  company?: CompanyEntity;
   avatar?: AvatarEntity;
+  tasks?: any[];
+  companyUserRoles?: any[];
 
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
-  constructor(props: CompanyEntityProps) {
+
+  constructor(props: CompanyUserEntityProps) {
     super();
 
     this.id = new Uuid(props.id);
+    this.companyId = new Uuid(props.companyId);
+    this.avatarId = props.avatarId && new Uuid(props.id);
+
     this.name = props.name;
     this.documentType = props.documentType;
     this.document = props.document;
     this.email = props.email;
     this.phone = props.phone;
     this.password = props.password;
-    this.companyUser = props.companyUser;
-    this.avatarId = props.avatarId && new Uuid(props.avatarId);
+    this.lat = props.lat;
+    this.long = props.long;
+
+    this.company = props.company;
     this.avatar = props.avatar;
+    this.tasks = props.tasks;
+    this.companyUserRoles = props.companyUserRoles;
+
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.deletedAt = props.deletedAt;
@@ -62,21 +82,29 @@ export class CompanyEntity extends Entity {
   toJSON() {
     return {
       id: this.id.value,
+      companyId: this.companyId.value,
       avatarId: this.avatarId?.value,
+
       email: this.email,
       name: this.name,
       document: this.document,
       documentType: this.documentType,
       phone: this.phone,
+      lat: this.lat,
+      long: this.long,
+
       avatar: this.avatar,
-      companyUser: this.companyUser,
+      company: this.company,
+      companyUserRoles: this.companyUserRoles,
+      tasks: this.tasks,
+
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
     };
   }
   validate() {
-    return new CompanyEntityValidator({
+    return new CompanyUserEntityValidator({
       document: this.document,
       documentType: this.documentType,
       email: this.email,
@@ -125,6 +153,16 @@ export class CompanyEntity extends Entity {
 
   changePhone(value: string) {
     this.phone = value;
+    this.validate();
+  }
+
+  changeLat(value: string) {
+    this.lat = value;
+    this.validate();
+  }
+
+  changeLong(value: string) {
+    this.long = value;
     this.validate();
   }
 }

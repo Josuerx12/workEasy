@@ -2,6 +2,8 @@ import { db } from "src/infra/dbConn";
 import { IUserRepository } from "../../domain/contracts/userRepository.interface";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UserModelMapper } from "../models/user.model.mapper";
+import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
+import { AvatarModelMapper } from "src/core/avatar/infra/models/avatar.model.mapper";
 
 export class UserRepository implements IUserRepository {
   async getById(id: string): Promise<UserEntity> {
@@ -36,7 +38,16 @@ export class UserRepository implements IUserRepository {
     await db.user.create({
       data: UserModelMapper.toModel(user),
     });
-    return;
+
+    if (user.avatar) {
+      await this.insertAvatar(user.avatar);
+    }
+  }
+
+  async insertAvatar(avatar: AvatarEntity): Promise<void> {
+    await db.avatar.create({
+      data: AvatarModelMapper.toModel(avatar),
+    });
   }
 
   async update(user: UserEntity): Promise<void> {

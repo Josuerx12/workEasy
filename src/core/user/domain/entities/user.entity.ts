@@ -2,6 +2,7 @@ import { Entity } from "src/core/shared/entity/entity";
 import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
 import { UserEntityValidator } from "../validators/user.validator";
 import { hashSync } from "bcryptjs";
+import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
 
 export type UserEntityProps = {
   id?: string;
@@ -27,7 +28,7 @@ export class UserEntity extends Entity {
   admin: boolean;
   moderator: boolean;
   support: boolean;
-  avatar?: any;
+  avatar?: AvatarEntity;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -78,6 +79,11 @@ export class UserEntity extends Entity {
     if (this.password) {
       this.password = hashSync(this.password, 10);
     }
+  }
+
+  addAvatar(avatarEntity: AvatarEntity) {
+    this.avatarId = avatarEntity.id;
+    this.avatar = avatarEntity;
   }
 
   changeEmail(value: string) {

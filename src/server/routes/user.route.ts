@@ -4,12 +4,13 @@ import { GetUserUseCase } from "src/core/user/application/useCases/getUserUseCas
 import { StoreUserUseCase } from "src/core/user/application/useCases/storeUserUseCase";
 import { UpdateUserUseCase } from "src/core/user/application/useCases/updateUserUseCase";
 import { UserRepository } from "src/core/user/infra/repositories/user.repository";
+import upload from "src/middlewares/multerMiddleware";
 
 export const userRoutes = Router();
 
 const userRepository = new UserRepository();
 
-userRoutes.post("/", async (req, res) => {
+userRoutes.post("/", upload.single("avatar"), async (req, res) => {
   const storeUseCase = new StoreUserUseCase(userRepository);
 
   const output = await storeUseCase.execute(req.body);
