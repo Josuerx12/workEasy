@@ -7,6 +7,11 @@ import {
   CompanyOutput,
   CompanyOutputMapper,
 } from "src/core/company/application/shared/company.output";
+import {
+  TaskOutput,
+  TaskOutputMapper,
+} from "src/core/task/application/shared/task.output";
+import { CompanyUserRoleOutput } from "src/core/companyUserRole/application/shared/companyUserRole.output";
 
 export type CompanyUserOutput = {
   id: string;
@@ -23,8 +28,8 @@ export type CompanyUserOutput = {
 
   company?: CompanyOutput;
   avatar?: AvatarOutput;
-  companyUserRoles?: any[];
-  tasks?: any[];
+  companyUserRoles?: CompanyUserRoleOutput[];
+  tasks?: TaskOutput;
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -40,6 +45,9 @@ export class CompanyUserOutputMapper {
         : null,
       avatar: companyUserEntity.avatar
         ? AvatarOutputMapper.toOutput(companyUserEntity.avatar)
+        : null,
+      tasks: companyUserEntity.tasks
+        ? companyUserEntity.tasks.map((t) => TaskOutputMapper.toOutput(t))
         : null,
     };
   }

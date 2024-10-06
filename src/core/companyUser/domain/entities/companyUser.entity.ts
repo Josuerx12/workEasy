@@ -4,6 +4,8 @@ import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
 import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
 import { CompanyUserEntityValidator } from "../validators/companyUser.validator";
 import { CompanyEntity } from "src/core/company/domain/entities/company.entity";
+import { TaskEntity } from "src/core/task/domain/entities/task.entity";
+import { CompanyUserRoleEntity } from "src/core/companyUserRole/domain/entities/companyUserRole.entity";
 
 export type CompanyUserEntityProps = {
   id?: string;
@@ -43,8 +45,8 @@ export class CompanyUserEntity extends Entity {
 
   company?: CompanyEntity;
   avatar?: AvatarEntity;
-  tasks?: any[];
-  companyUserRoles?: any[];
+  tasks?: TaskEntity[];
+  companyUserRoles?: CompanyUserRoleEntity[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -93,10 +95,12 @@ export class CompanyUserEntity extends Entity {
       lat: this.lat,
       long: this.long,
 
-      avatar: this.avatar,
-      company: this.company,
-      companyUserRoles: this.companyUserRoles,
-      tasks: this.tasks,
+      avatar: this.avatar?.toJSON(),
+      company: this.company?.toJSON(),
+      companyUserRoles: this.companyUserRoles
+        ? this.companyUserRoles.map((r) => r.toJSON())
+        : null,
+      tasks: this.tasks ? this.tasks.map((t) => t.toJSON()) : null,
 
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

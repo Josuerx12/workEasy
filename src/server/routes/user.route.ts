@@ -18,12 +18,13 @@ userRoutes.post("/", upload.single("avatar"), async (req, res) => {
   return res.status(201).json(output);
 });
 
-userRoutes.put("/:id", async (req, res) => {
+userRoutes.put("/:id", upload.single("avatar"), async (req, res) => {
   const updateUseCase = new UpdateUserUseCase(userRepository);
 
   const output = await updateUseCase.execute({
     id: req.params.id,
     ...req.body,
+    file: req.file,
   });
 
   return res.status(201).json(output);

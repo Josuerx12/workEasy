@@ -8,6 +8,7 @@ import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
 import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
 import s3 from "src/infra/s3Client";
+import sharp from "sharp";
 
 export type UpdateCompanyUserInput = {
   id: string;
@@ -92,19 +93,25 @@ export class UpdateCompanyUserUseCase
       await s3.send(s3DeleteObjectCommand);
     }
 
+    const optimizedImageBuffer = await sharp(file.buffer)
+      .resize(512, 512)
+      .jpeg({ quality: 80 })
+      .toBuffer();
+
     const s3Command = new PutObjectCommand({
-      Key: file.filename + "." + file.mimetype.split("/")[1],
+      Key: file.filename + ".jpeg",
       Bucket: process.env.AVATAR_BUCKET,
-      Body: file.buffer,
+      Body: optimizedImageBuffer,
+      ContentType: "image/jpeg",
     });
 
     await s3.send(s3Command);
 
     companyUser.addAvatar(
       new AvatarEntity({
-        path: file.filename + "." + file.mimetype.split("/")[1],
+        path: file.filename + "." + ".jpeg",
         url: `https://${process.env.AVATAR_BUCKET}.s3.us-east-2.amazonaws.com/${
-          file.filename + "." + file.mimetype.split("/")[1]
+          file.filename + "." + ".jpeg"
         }`,
       })
     );

@@ -37,10 +37,12 @@ model company {
   password     String
   companyUser  companyUser[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt()
-  deletedAt DateTime?
-  avatarId  String?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt()
+  deletedAt           DateTime?
+  avatarId            String?
+  companyRequester    companyRequester[]
+  companyTaskCategory companyTaskCategory[]
 
   @@unique([document, email])
   @@map("companies")
@@ -72,13 +74,16 @@ model companyUser {
 }
 
 model companyRequester {
-  id       String  @id
-  avatarId String?
-  name     String
-  email    String  @unique
-  password String
-  task     task[]
-  avatar   avatar? @relation(fields: [avatarId], references: [id])
+  id        String  @id
+  avatarId  String?
+  companyId String
+  name      String
+  email     String  @unique
+  phone     String?
+  password  String
+  task      task[]
+  avatar    avatar? @relation(fields: [avatarId], references: [id])
+  company   company @relation(fields: [companyId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt()
@@ -112,14 +117,16 @@ model role {
   companyUserRole companyUserRole[]
 }
 
-model category {
+model companyTaskCategory {
   id          String  @id
+  companyId   String
   title       String
   description String?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt()
   deletedAt DateTime?
+  company   company   @relation(fields: [companyId], references: [id])
   task      task[]
 }
 
@@ -151,20 +158,20 @@ model evidence {
 }
 
 model task {
-  id                 String     @id
-  companyRequesterId String
-  categoryId         String
-  companyUserId      String?
-  status             String     @default("created")
-  title              String
-  description        String
-  evidences          evidence[]
+  id                    String     @id
+  companyRequesterId    String
+  companyTaskCategoryId String
+  companyUserId         String?
+  status                String     @default("created")
+  title                 String
+  description           String
+  evidences             evidence[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt()
   deletedAt DateTime?
 
-  companyUser      companyUser?     @relation(fields: [companyUserId], references: [id])
-  category         category         @relation(fields: [categoryId], references: [id])
-  companyRequester companyRequester @relation(fields: [companyRequesterId], references: [id])
+  companyUser         companyUser?        @relation(fields: [companyUserId], references: [id])
+  companyTaskCategory companyTaskCategory @relation(fields: [companyTaskCategoryId], references: [id])
+  companyRequester    companyRequester    @relation(fields: [companyRequesterId], references: [id])
 }
