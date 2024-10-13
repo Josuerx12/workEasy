@@ -2,6 +2,8 @@ import { db } from "src/infra/dbConn";
 import { ICompanyRepository } from "../../domain/contracts/companyRepository.interface";
 import { CompanyEntity } from "../../domain/entities/company.entity";
 import { CompanyModelMapper } from "../models/company.model.mapper";
+import { AddressEntity } from "src/core/address/domain/entities/address.entity";
+import { AddressModelMapper } from "src/core/address/infra/models/address.model.mapper";
 
 export class CompanyRepository implements ICompanyRepository {
   async getCompanyByDocumentEmailOrId(filter: string): Promise<CompanyEntity> {
@@ -41,6 +43,25 @@ export class CompanyRepository implements ICompanyRepository {
       data: CompanyModelMapper.toModel(entity),
     });
 
+    entity.address && this.insertAddress(entity.address);
+
+    return;
+  }
+
+  private async insertAddress(entity: AddressEntity): Promise<void> {
+    await db.address.create({
+      data: AddressModelMapper.toModel(entity),
+    });
+
+    return;
+  }
+
+  private async updateAddress(entity: AddressEntity): Promise<void> {
+    await db.address.update({
+      where: { id: entity.id.value },
+      data: AddressModelMapper.toModel(entity),
+    });
+
     return;
   }
 
@@ -49,6 +70,20 @@ export class CompanyRepository implements ICompanyRepository {
       where: { id: entity.id.value },
       data: CompanyModelMapper.toModel(entity),
     });
+
+    if (entity.address) {
+      const addressAlreadyExists = await db.address.findUnique({
+        where: { id: entity.address.id.value },
+      });
+
+      if (!addressAlreadyExists) {
+        await this.insertAddress(entity.address);
+
+        return;
+      }
+
+      await this.updateAddress(entity.address);
+    }
 
     return;
   }

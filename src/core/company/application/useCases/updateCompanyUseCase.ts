@@ -14,7 +14,6 @@ export type UpdateCompanyInput = {
   document?: string;
   email?: string;
   phone?: string;
-  password?: string;
   file?: Express.Multer.File;
 };
 
@@ -34,7 +33,6 @@ export class UpdateCompanyUseCase
     input.documentType && companyEntity.changeDocumentType(input.documentType);
     input.email && companyEntity.changeEmail(input.email);
     input.phone && companyEntity.changePhone(input.phone);
-    input.password && companyEntity.changePassword(input.password);
 
     input.file && this.uploadAndUpdateAvatar(companyEntity, input.file);
 

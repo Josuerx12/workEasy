@@ -16,78 +16,79 @@ model user {
   email     String  @unique
   name      String
   password  String
-  avatar    avatar? @relation(fields: [avatarId], references: [id])
   admin     Boolean @default(false)
   moderator Boolean @default(false)
   support   Boolean @default(true)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt()
-  deletedAt DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt()
+  deletedAt        DateTime?
+  avatar           avatar?            @relation(fields: [avatarId], references: [id])
+  companyUser      companyUser[]
+  companyRequester companyRequester[]
+  company          company[]
 }
 
 model company {
-  id           String        @id
-  avatar       avatar?       @relation(fields: [avatarId], references: [id])
+  id           String  @id
+  avatarId     String?
+  userId       String  @unique
+  addressId    String?
   name         String
   documentType String
-  document     String        @unique
-  email        String        @unique
+  document     String  @unique
+  email        String  @unique
   phone        String
-  password     String
-  companyUser  companyUser[]
 
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt()
-  deletedAt           DateTime?
-  avatarId            String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  avatar  avatar?  @relation(fields: [avatarId], references: [id])
+  address address? @relation(fields: [addressId], references: [id])
+  user    user     @relation(fields: [userId], references: [id])
+
+  companyUser         companyUser[]
   companyRequester    companyRequester[]
   companyTaskCategory companyTaskCategory[]
+  companyClient       companyClient[]
 
   @@unique([document, email])
   @@map("companies")
 }
 
 model companyUser {
-  id           String  @id
-  companyId    String
-  avatar       avatar? @relation(fields: [avatarId], references: [id])
-  name         String
-  documentType String
-  document     String  @unique
-  phone        String
-  email        String  @unique
-  password     String
-  lat          String
-  long         String
+  id        String @id
+  companyId String
+  userId    String
+  lat       String
+  long      String
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt()
   deletedAt DateTime?
 
+  user            user              @relation(fields: [userId], references: [id])
   company         company           @relation(fields: [companyId], references: [id])
   companyUserRole companyUserRole[]
   task            task[]
-  avatarId        String
 
-  @@unique([document, email])
+  @@unique([companyId, userId])
 }
 
 model companyRequester {
   id        String  @id
-  avatarId  String?
   companyId String
-  name      String
-  email     String  @unique
-  phone     String?
-  password  String
+  userId    String
   task      task[]
-  avatar    avatar? @relation(fields: [avatarId], references: [id])
+  user      user    @relation(fields: [userId], references: [id])
   company   company @relation(fields: [companyId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt()
   deletedAt DateTime?
+
+  @@unique([companyId, userId])
 }
 
 model companyUserRole {
@@ -135,13 +136,11 @@ model avatar {
   path String
   url  String
 
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt()
-  deletedAt        DateTime?
-  companyRequester companyRequester[]
-  company          company[]
-  user             user[]
-  companyUser      companyUser[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+  company   company[]
+  user      user[]
 }
 
 model evidence {
@@ -174,4 +173,35 @@ model task {
   companyUser         companyUser?        @relation(fields: [companyUserId], references: [id])
   companyTaskCategory companyTaskCategory @relation(fields: [companyTaskCategoryId], references: [id])
   companyRequester    companyRequester    @relation(fields: [companyRequesterId], references: [id])
+}
+
+model address {
+  id String @id
+
+  street       String
+  neighborhood String
+  number       String
+  city         String
+  state        String
+  cep          String
+
+  lat           String?
+  long          String?
+  companyClient companyClient[]
+  company       company[]
+}
+
+model companyClient {
+  id           String @id
+  companyId    String
+  addressId    String
+  name         String
+  phone        String
+  documentType String
+  document     String
+
+  company company @relation(fields: [companyId], references: [id])
+  address address @relation(fields: [addressId], references: [id])
+
+  @@unique([companyId, document])
 }

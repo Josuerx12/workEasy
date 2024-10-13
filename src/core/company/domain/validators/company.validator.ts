@@ -60,10 +60,6 @@ export class CompanyEntityValidator {
           { message: "Tipo do documento deve ser cpf ou cnpj." }
         )
         .optional(),
-      password: z
-        .string({ message: "Senha é obrigatoria e deve ser informada!" })
-        .min(8, "Senha deve conter no minimo 8 caracteres")
-        .optional(),
     });
 
     const companyValidated = companySchema.safeParse(this);

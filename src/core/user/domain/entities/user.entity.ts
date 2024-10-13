@@ -3,6 +3,9 @@ import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
 import { UserEntityValidator } from "../validators/user.validator";
 import { hashSync } from "bcryptjs";
 import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
+import { CompanyUserEntity } from "src/core/companyUser/domain/entities/companyUser.entity";
+import { CompanyEntity } from "src/core/company/domain/entities/company.entity";
+import { CompanyRequesterEntity } from "src/core/companyRequester/domain/entities/companyRequester.entity";
 
 export type UserEntityProps = {
   id?: string;
@@ -13,7 +16,11 @@ export type UserEntityProps = {
   admin?: boolean;
   moderator?: boolean;
   support?: boolean;
-  avatar?: any;
+  avatar?: AvatarEntity;
+  companyUser?: CompanyUserEntity[];
+  companyRequester?: CompanyRequesterEntity[];
+  company?: CompanyEntity[];
+
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -29,6 +36,9 @@ export class UserEntity extends Entity {
   moderator: boolean;
   support: boolean;
   avatar?: AvatarEntity;
+  companyUser?: CompanyUserEntity;
+  companyRequester?: CompanyRequesterEntity;
+  company?: CompanyEntity;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -45,6 +55,9 @@ export class UserEntity extends Entity {
     this.moderator = props.moderator != undefined ? props.moderator : false;
     this.support = props.support != undefined ? props.support : false;
     this.avatar = props.avatar;
+    this.company = props.company[0];
+    this.companyUser = props.companyUser[0];
+    this.companyRequester = props.companyRequester[0];
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.deletedAt = props.deletedAt;
@@ -62,7 +75,10 @@ export class UserEntity extends Entity {
       admin: this.admin,
       moderator: this.moderator,
       support: this.support,
-      avatar: this.avatar,
+      avatar: this.avatar?.toJSON(),
+      company: this.company?.toJSON(),
+      companyUser: this.companyUser?.toJSON(),
+      companyRequester: this.companyRequester?.toJSON(),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
