@@ -4,24 +4,33 @@ import { GetCompanyRequesterUseCase } from "src/core/companyRequester/applicatio
 import { StoreCompanyRequesterUseCase } from "src/core/companyRequester/application/useCases/storeCompanyRequesterUseCase";
 import { UpdateCompanyRequesterUseCase } from "src/core/companyRequester/application/useCases/updateCompanyRequesterUseCase";
 import { CompanyRequesterRepository } from "src/core/companyRequester/infra/repositories/companyRequester.repository";
+import { AuthGuard } from "src/middlewares/authGuard";
 import upload from "src/middlewares/multerMiddleware";
 
 export const companyRequesterRoutes = Router();
 
 const companyRequesterRepository = new CompanyRequesterRepository();
 
-companyRequesterRoutes.post("/", upload.single("avatar"), async (req, res) => {
-  const storeUseCase = new StoreCompanyRequesterUseCase(
-    companyRequesterRepository
-  );
+const authGuard = new AuthGuard();
 
-  const output = await storeUseCase.execute({ ...req.body, file: req.file });
+companyRequesterRoutes.post(
+  "/",
+  authGuard.authenticate,
+  upload.single("avatar"),
+  async (req, res) => {
+    const storeUseCase = new StoreCompanyRequesterUseCase(
+      companyRequesterRepository
+    );
 
-  return res.status(201).json(output);
-});
+    const output = await storeUseCase.execute({ ...req.body, file: req.file });
+
+    return res.status(201).json(output);
+  }
+);
 
 companyRequesterRoutes.put(
   "/:id",
+  authGuard.authenticate,
   upload.single("avatar"),
   async (req, res) => {
     const updateUseCase = new UpdateCompanyRequesterUseCase(

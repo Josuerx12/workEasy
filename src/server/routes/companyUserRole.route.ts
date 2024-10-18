@@ -3,12 +3,15 @@ import { DeleteCompanyUserRoleUseCase } from "src/core/companyUserRole/applicati
 import { GetAllCompanyUserRoleUseCase } from "src/core/companyUserRole/application/useCases/getAllCompanyUserUseCase";
 import { StoreCompanyUserRoleUseCase } from "src/core/companyUserRole/application/useCases/storeCompanyUserRoleUseCase";
 import { CompanyUserRoleRepository } from "src/core/companyUserRole/infra/repositories/companyUserRole.repository";
+import { AuthGuard } from "src/middlewares/authGuard";
 
 export const companyUserRoleRoutes = Router();
 
 const companyUserRoleRepository = new CompanyUserRoleRepository();
 
-companyUserRoleRoutes.post("/", async (req, res) => {
+const authGuard = new AuthGuard();
+
+companyUserRoleRoutes.post("/", authGuard.authenticate, async (req, res) => {
   const storeUseCase = new StoreCompanyUserRoleUseCase(
     companyUserRoleRepository
   );
@@ -28,12 +31,16 @@ companyUserRoleRoutes.get("/", async (req, res) => {
   return res.status(200).json(output);
 });
 
-companyUserRoleRoutes.delete("/:id", async (req, res) => {
-  const deleteUseCase = new DeleteCompanyUserRoleUseCase(
-    companyUserRoleRepository
-  );
+companyUserRoleRoutes.delete(
+  "/:id",
+  authGuard.authenticate,
+  async (req, res) => {
+    const deleteUseCase = new DeleteCompanyUserRoleUseCase(
+      companyUserRoleRepository
+    );
 
-  const output = await deleteUseCase.execute(req.params);
+    const output = await deleteUseCase.execute({ id: req.params.id });
 
-  return res.status(200).json(output);
-});
+    return res.status(200).json(output);
+  }
+);

@@ -7,6 +7,7 @@ import { companyUserRoutes } from "./routes/companyUser.route";
 import { companyUserRoleRoutes } from "./routes/companyUserRole.route";
 import { companyTaskCategoryRoutes } from "./routes/companyTaskCategory.route";
 import { roleRoutes } from "./routes/role.route";
+import { authRoutes } from "./routes/auth.route";
 
 export const routes = Router();
 
@@ -22,3 +23,4 @@ routes.use("/companyRequester", companyRequesterRoutes);
 routes.use("/companyTaskCategory", companyTaskCategoryRoutes);
 routes.use("/task", taskRoutes);
 routes.use("/role", roleRoutes);
+routes.use("/auth", authRoutes);

@@ -4,31 +4,44 @@ import { GetCompanyUserUseCase } from "src/core/companyUser/application/useCases
 import { StoreCompanyUserUseCase } from "src/core/companyUser/application/useCases/storeCompanyUserUseCase";
 import { UpdateCompanyUserUseCase } from "src/core/companyUser/application/useCases/updateCompanyUserUseCase";
 import { CompanyUserRepository } from "src/core/companyUser/infra/repositories/companyUser.repository";
+import { AuthGuard } from "src/middlewares/authGuard";
 import upload from "src/middlewares/multerMiddleware";
 
 export const companyUserRoutes = Router();
 
 const companyUserRepository = new CompanyUserRepository();
 
-companyUserRoutes.post("/", upload.single("avatar"), async (req, res) => {
-  const storeUseCase = new StoreCompanyUserUseCase(companyUserRepository);
+const authGuard = new AuthGuard();
 
-  const output = await storeUseCase.execute({ ...req.body, file: req.file });
+companyUserRoutes.post(
+  "/",
+  authGuard.authenticate,
+  upload.single("avatar"),
+  async (req, res) => {
+    const storeUseCase = new StoreCompanyUserUseCase(companyUserRepository);
 
-  return res.status(201).json(output);
-});
+    const output = await storeUseCase.execute({ ...req.body, file: req.file });
 
-companyUserRoutes.put("/:id", upload.single("avatar"), async (req, res) => {
-  const updateUseCase = new UpdateCompanyUserUseCase(companyUserRepository);
+    return res.status(201).json(output);
+  }
+);
 
-  const output = await updateUseCase.execute({
-    id: req.params.id,
-    ...req.body,
-    file: req.file,
-  });
+companyUserRoutes.put(
+  "/:id",
+  authGuard.authenticate,
+  upload.single("avatar"),
+  async (req, res) => {
+    const updateUseCase = new UpdateCompanyUserUseCase(companyUserRepository);
 
-  return res.status(201).json(output);
-});
+    const output = await updateUseCase.execute({
+      id: req.params.id,
+      ...req.body,
+      file: req.file,
+    });
+
+    return res.status(201).json(output);
+  }
+);
 
 companyUserRoutes.get("/:id", async (req, res) => {
   const getUseCase = new GetCompanyUserUseCase(companyUserRepository);

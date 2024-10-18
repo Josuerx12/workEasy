@@ -5,33 +5,44 @@ import { GetCompanyTaskCategoryUseCase } from "src/core/companyTaskCategory/appl
 import { StoreCompanyTaskCategoryUseCase } from "src/core/companyTaskCategory/application/useCases/storeCompanyTaskCategoryUseCase";
 import { UpdateCompanyTaskCategoryUseCase } from "src/core/companyTaskCategory/application/useCases/updateCompanyTaskCategoryUseCase";
 import { CompanyTaskCategoryRepository } from "src/core/companyTaskCategory/infra/repositories/companyTaskCategory.repository";
+import { AuthGuard } from "src/middlewares/authGuard";
 
 export const companyTaskCategoryRoutes = Router();
 
 const companyTaskCategoryRepository = new CompanyTaskCategoryRepository();
 
-companyTaskCategoryRoutes.post("/", async (req, res) => {
-  const storeUseCase = new StoreCompanyTaskCategoryUseCase(
-    companyTaskCategoryRepository
-  );
+const authGuard = new AuthGuard();
 
-  const output = await storeUseCase.execute(req.body);
+companyTaskCategoryRoutes.post(
+  "/",
+  authGuard.authenticate,
+  async (req, res) => {
+    const storeUseCase = new StoreCompanyTaskCategoryUseCase(
+      companyTaskCategoryRepository
+    );
 
-  return res.status(201).json(output);
-});
+    const output = await storeUseCase.execute(req.body);
 
-companyTaskCategoryRoutes.put("/:id", async (req, res) => {
-  const updateUseCase = new UpdateCompanyTaskCategoryUseCase(
-    companyTaskCategoryRepository
-  );
+    return res.status(201).json(output);
+  }
+);
 
-  const output = await updateUseCase.execute({
-    id: req.params.id,
-    ...req.body,
-  });
+companyTaskCategoryRoutes.put(
+  "/:id",
+  authGuard.authenticate,
+  async (req, res) => {
+    const updateUseCase = new UpdateCompanyTaskCategoryUseCase(
+      companyTaskCategoryRepository
+    );
 
-  return res.status(201).json(output);
-});
+    const output = await updateUseCase.execute({
+      id: req.params.id,
+      ...req.body,
+    });
+
+    return res.status(201).json(output);
+  }
+);
 
 companyTaskCategoryRoutes.get("/:id", async (req, res) => {
   const getUseCase = new GetCompanyTaskCategoryUseCase(
@@ -53,12 +64,16 @@ companyTaskCategoryRoutes.get("/", async (req, res) => {
   return res.status(200).json(output);
 });
 
-companyTaskCategoryRoutes.delete("/:id", async (req, res) => {
-  const deleteUseCase = new DeleteCompanyTaskCategoryUseCase(
-    companyTaskCategoryRepository
-  );
+companyTaskCategoryRoutes.delete(
+  "/:id",
+  authGuard.authenticate,
+  async (req, res) => {
+    const deleteUseCase = new DeleteCompanyTaskCategoryUseCase(
+      companyTaskCategoryRepository
+    );
 
-  const output = await deleteUseCase.execute(req.params);
+    const output = await deleteUseCase.execute({ id: req.params.id });
 
-  return res.status(200).json(output);
-});
+    return res.status(200).json(output);
+  }
+);

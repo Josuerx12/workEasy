@@ -4,31 +4,44 @@ import { GetUserUseCase } from "src/core/user/application/useCases/getUserUseCas
 import { StoreUserUseCase } from "src/core/user/application/useCases/storeUserUseCase";
 import { UpdateUserUseCase } from "src/core/user/application/useCases/updateUserUseCase";
 import { UserRepository } from "src/core/user/infra/repositories/user.repository";
+import { AuthGuard } from "src/middlewares/authGuard";
 import upload from "src/middlewares/multerMiddleware";
 
 export const userRoutes = Router();
 
 const userRepository = new UserRepository();
 
-userRoutes.post("/", upload.single("avatar"), async (req, res) => {
-  const storeUseCase = new StoreUserUseCase(userRepository);
+const authGuard = new AuthGuard();
 
-  const output = await storeUseCase.execute(req.body);
+userRoutes.post(
+  "/",
+  authGuard.authenticate,
+  upload.single("avatar"),
+  async (req, res) => {
+    const storeUseCase = new StoreUserUseCase(userRepository);
 
-  return res.status(201).json(output);
-});
+    const output = await storeUseCase.execute(req.body);
 
-userRoutes.put("/:id", upload.single("avatar"), async (req, res) => {
-  const updateUseCase = new UpdateUserUseCase(userRepository);
+    return res.status(201).json(output);
+  }
+);
 
-  const output = await updateUseCase.execute({
-    id: req.params.id,
-    ...req.body,
-    file: req.file,
-  });
+userRoutes.put(
+  "/:id",
+  authGuard.authenticate,
+  upload.single("avatar"),
+  async (req, res) => {
+    const updateUseCase = new UpdateUserUseCase(userRepository);
 
-  return res.status(201).json(output);
-});
+    const output = await updateUseCase.execute({
+      id: req.params.id,
+      ...req.body,
+      file: req.file,
+    });
+
+    return res.status(201).json(output);
+  }
+);
 
 userRoutes.get("/:id", async (req, res) => {
   const getUseCase = new GetUserUseCase(userRepository);

@@ -5,7 +5,11 @@ import { UserModelMapper } from "src/core/user/infra/models/user.model.mapper";
 
 export class AuthGuard {
   authenticate(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      throw new Error("Nenhum token informado!");
+    }
 
     verify(token, process.env.SECRET, async (err, decodedToken: any) => {
       if (err) {
@@ -13,7 +17,7 @@ export class AuthGuard {
         throw new Error("Token invalido!");
       } else {
         const user = await db.user.findUnique({
-          where: { id: decodedToken.id },
+          where: { id: decodedToken.user.id },
           select: {
             company: true,
             admin: true,

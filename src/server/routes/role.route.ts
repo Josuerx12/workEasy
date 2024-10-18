@@ -4,12 +4,15 @@ import { GetRoleUseCase } from "src/core/role/application/useCases/getRoleUseCas
 import { StoreRoleUseCase } from "src/core/role/application/useCases/storeRoleUseCase";
 import { UpdateRoleUseCase } from "src/core/role/application/useCases/updateRoleUseCase";
 import { RoleRepository } from "src/core/role/infra/repositories/role.repository";
+import { AuthGuard } from "src/middlewares/authGuard";
 
 export const roleRoutes = Router();
 
 const roleRepository = new RoleRepository();
 
-roleRoutes.post("/", async (req, res) => {
+const authGuard = new AuthGuard();
+
+roleRoutes.post("/", authGuard.authenticate, async (req, res) => {
   const storeUseCase = new StoreRoleUseCase(roleRepository);
 
   const output = await storeUseCase.execute(req.body);
@@ -17,7 +20,7 @@ roleRoutes.post("/", async (req, res) => {
   return res.status(201).json(output);
 });
 
-roleRoutes.put("/:id", async (req, res) => {
+roleRoutes.put("/:id", authGuard.authenticate, async (req, res) => {
   const updateUseCase = new UpdateRoleUseCase(roleRepository);
 
   const output = await updateUseCase.execute({

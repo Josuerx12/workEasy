@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { hash } from "bcryptjs";
+import { hash, hashSync } from "bcryptjs";
 import { v4 } from "uuid";
 
 const prisma = new PrismaClient();
@@ -10,7 +10,7 @@ async function main() {
       email: "super@workeasy.com",
       name: "workeasysuper",
       id: v4(),
-      password: await hash(process.env.PASSWORD, 10),
+      password: hashSync(process.env.PASSWORD, 10),
       admin: true,
       support: true,
       moderator: true,

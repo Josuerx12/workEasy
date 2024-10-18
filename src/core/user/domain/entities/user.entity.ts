@@ -55,9 +55,9 @@ export class UserEntity extends Entity {
     this.moderator = props.moderator != undefined ? props.moderator : false;
     this.support = props.support != undefined ? props.support : false;
     this.avatar = props.avatar;
-    this.company = props.company[0];
-    this.companyUser = props.companyUser[0];
-    this.companyRequester = props.companyRequester[0];
+    this.company = props.company && props.company[0];
+    this.companyUser = props.companyUser && props.companyUser[0];
+    this.companyRequester = props.companyRequester && props.companyRequester[0];
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.deletedAt = props.deletedAt;
