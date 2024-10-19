@@ -11,15 +11,12 @@ export class CompanyRequesterRepository implements ICompanyRequesterRepository {
       where: {
         OR: [
           {
-            email: filter,
-          },
-          {
             id: filter,
           },
         ],
       },
       include: {
-        avatar: true,
+        user: true,
         company: true,
       },
     });
@@ -36,7 +33,7 @@ export class CompanyRequesterRepository implements ICompanyRequesterRepository {
   async getAll(): Promise<CompanyRequesterEntity[]> {
     const companies = await db.companyRequester.findMany({
       include: {
-        avatar: true,
+        user: true,
         company: true,
       },
     });

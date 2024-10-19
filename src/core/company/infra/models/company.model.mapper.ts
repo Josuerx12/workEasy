@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { CompanyEntity } from "../../domain/entities/company.entity";
+import { UserModelMapper } from "src/core/user/infra/models/user.model.mapper";
 
 export class CompanyModelMapper {
   static toModel(company: CompanyEntity): Prisma.companyUncheckedCreateInput {
@@ -8,10 +9,10 @@ export class CompanyModelMapper {
       avatarId: company.avatarId?.value,
       email: company.email,
       name: company.name,
-      password: company.password,
       document: company.document,
       documentType: company.documentType,
       phone: company.phone,
+      userId: company.userId.value,
     };
   }
 
@@ -21,6 +22,8 @@ export class CompanyModelMapper {
       email: model.email,
       name: model.name,
       avatar: model.avatar,
+      userId: model.userId,
+      user: model.user ? UserModelMapper.toEntity(model.user) : null,
       avatarId: model.avatarId,
       document: model.document,
       documentType: model.documentType,

@@ -7,20 +7,23 @@ import {
   CompanyOutputMapper,
 } from "src/core/company/application/shared/company.output";
 import { CompanyRequesterEntity } from "../../domain/entities/companyRequester.entity";
+import {
+  UserOutput,
+  UserOutputMapper,
+} from "src/core/user/application/shared/user.output";
+import {
+  TaskOutput,
+  TaskOutputMapper,
+} from "src/core/task/application/shared/task.output";
 
 export type CompanyRequesterOutput = {
   id: string;
   companyId: string;
-  avatarId?: string;
-
-  name: string;
-  email: string;
-  phone?: string;
-  password?: string;
+  userId: string;
 
   company?: CompanyOutput;
-  avatar?: AvatarOutput;
-  tasks?: any[];
+  user?: UserOutput;
+  tasks?: TaskOutput[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -36,8 +39,13 @@ export class CompanyRequesterOutputMapper {
       company: companyRequesterEntity.company
         ? CompanyOutputMapper.toOutput(companyRequesterEntity.company)
         : null,
-      avatar: companyRequesterEntity.avatar
-        ? AvatarOutputMapper.toOutput(companyRequesterEntity.avatar)
+      user: companyRequesterEntity.user
+        ? UserOutputMapper.toOutput(companyRequesterEntity.user)
+        : null,
+      tasks: companyRequesterEntity.tasks
+        ? companyRequesterEntity.tasks.map((task) =>
+            TaskOutputMapper.toOutput(task)
+          )
         : null,
     };
   }

@@ -11,15 +11,15 @@ export class CompanyUserRepository implements ICompanyUserRepository {
       where: {
         OR: [
           {
-            document: filter,
-          },
-          {
-            email: filter,
-          },
-          {
             id: filter,
           },
         ],
+      },
+      include: {
+        company: true,
+        companyUserRole: true,
+        task: true,
+        user: true,
       },
     });
 
@@ -31,7 +31,14 @@ export class CompanyUserRepository implements ICompanyUserRepository {
   }
 
   async getAll(): Promise<CompanyUserEntity[]> {
-    const companies = await db.companyUser.findMany();
+    const companies = await db.companyUser.findMany({
+      include: {
+        company: true,
+        companyUserRole: true,
+        task: true,
+        user: true,
+      },
+    });
 
     return companies
       ? companies.map((companyUser) =>

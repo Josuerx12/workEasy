@@ -22,6 +22,7 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
+    "noErrorTruncation": true,
     "strict": true,
     "paths": {
       "src/*": ["src/*"]

@@ -11,25 +11,26 @@ import {
   TaskOutput,
   TaskOutputMapper,
 } from "src/core/task/application/shared/task.output";
-import { CompanyUserRoleOutput } from "src/core/companyUserRole/application/shared/companyUserRole.output";
+import {
+  CompanyUserRoleOutput,
+  CompanyUserRoleOutputMapper,
+} from "src/core/companyUserRole/application/shared/companyUserRole.output";
+import {
+  UserOutput,
+  UserOutputMapper,
+} from "src/core/user/application/shared/user.output";
 
 export type CompanyUserOutput = {
   id: string;
   companyId: string;
-  avatarId?: string;
-
-  name: string;
-  documentType: string;
-  document: string;
-  email: string;
-  phone: string;
+  userId: string;
   lat: string;
   long: string;
 
   company?: CompanyOutput;
-  avatar?: AvatarOutput;
+  user?: UserOutput;
   companyUserRoles?: CompanyUserRoleOutput[];
-  tasks?: TaskOutput;
+  tasks?: TaskOutput[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -43,11 +44,16 @@ export class CompanyUserOutputMapper {
       company: companyUserEntity.company
         ? CompanyOutputMapper.toOutput(companyUserEntity.company)
         : null,
-      avatar: companyUserEntity.avatar
-        ? AvatarOutputMapper.toOutput(companyUserEntity.avatar)
+      user: companyUserEntity.user
+        ? UserOutputMapper.toOutput(companyUserEntity.user)
         : null,
       tasks: companyUserEntity.tasks
         ? companyUserEntity.tasks.map((t) => TaskOutputMapper.toOutput(t))
+        : null,
+      companyUserRoles: companyUserEntity.companyUserRoles
+        ? companyUserEntity.companyUserRoles.map((c) =>
+            CompanyUserRoleOutputMapper.toOutput(c)
+          )
         : null,
     };
   }
