@@ -6,7 +6,7 @@ import { errorHandler } from "src/middlewares/errorHandler";
 import rateLimit from "express-rate-limit";
 
 export class Bootstrap {
-  private app: express.Application;
+  app: express.Application;
   private port: string | number;
 
   constructor() {

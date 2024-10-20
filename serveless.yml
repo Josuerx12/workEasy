@@ -1,0 +1,30 @@
+service: workEasy
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    NODE_ENV: production
+    PASSWORD: ${env:PASSWORD}
+    DATABASE_URL: ${env:DATABASE_URL}
+    AWS_ACCESS_KEY_VERCEL: ${env:AWS_ACCESS_KEY_VERCEL}
+    AWS_SECRET_KEY_VERCEL: ${env:AWS_SECRET_KEY_VERCEL}
+    AWS_REGION_VERCEL: ${env:AWS_REGION_VERCEL}
+    AVATAR_BUCKET: ${env:AVATAR_BUCKET}
+    SECRET: ${env:SECRET}
+  memorySize: 128 # Ajuste de memória
+
+functions:
+  app:
+    handler: dist/index.handler
+    events:
+      - http:
+          path: /{proxy+} # Captura todas as rotas
+          method: any
+
+package:
+  exclude:
+    - node_modules/**
+    - src/**
+    - .git/**
+    - .vscode/**
