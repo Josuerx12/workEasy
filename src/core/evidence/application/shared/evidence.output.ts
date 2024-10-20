@@ -13,6 +13,6 @@ export type EvidenceOutput = {
 
 export class EvidenceOutputMapper {
   static toOutput(evidenceEntity: EvidenceEntity): EvidenceOutput {
-    return evidenceEntity.toJSON();
+    return evidenceEntity ? evidenceEntity.toJSON() : null;
   }
 }

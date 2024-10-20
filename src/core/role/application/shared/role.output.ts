@@ -13,6 +13,6 @@ export type RoleOutput = {
 
 export class RoleOutputMapper {
   static toOutput(roleEntity: RoleEntity): RoleOutput {
-    return roleEntity.toJSON();
+    return roleEntity ? roleEntity.toJSON() : null;
   }
 }

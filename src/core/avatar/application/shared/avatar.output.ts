@@ -12,6 +12,6 @@ export type AvatarOutput = {
 
 export class AvatarOutputMapper {
   static toOutput(avatarEntity: AvatarEntity): AvatarOutput {
-    return avatarEntity.toJSON();
+    return avatarEntity ? avatarEntity.toJSON() : null;
   }
 }

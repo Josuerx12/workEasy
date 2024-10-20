@@ -34,19 +34,21 @@ export class CompanyRequesterOutputMapper {
   static toOutput(
     companyRequesterEntity: CompanyRequesterEntity
   ): CompanyRequesterOutput {
-    return {
-      ...companyRequesterEntity.toJSON(),
-      company: companyRequesterEntity.company
-        ? CompanyOutputMapper.toOutput(companyRequesterEntity.company)
-        : null,
-      user: companyRequesterEntity.user
-        ? UserOutputMapper.toOutput(companyRequesterEntity.user)
-        : null,
-      tasks: companyRequesterEntity.tasks
-        ? companyRequesterEntity.tasks.map((task) =>
-            TaskOutputMapper.toOutput(task)
-          )
-        : null,
-    };
+    return companyRequesterEntity
+      ? {
+          ...companyRequesterEntity.toJSON(),
+          company: companyRequesterEntity.company
+            ? CompanyOutputMapper.toOutput(companyRequesterEntity.company)
+            : null,
+          user: companyRequesterEntity.user
+            ? UserOutputMapper.toOutput(companyRequesterEntity.user)
+            : null,
+          tasks: companyRequesterEntity.tasks
+            ? companyRequesterEntity.tasks.map((task) =>
+                TaskOutputMapper.toOutput(task)
+              )
+            : null,
+        }
+      : null;
   }
 }

@@ -25,14 +25,18 @@ export class CompanyUserRoleOutputMapper {
   static toOutput(
     companyUserRoleEntity: CompanyUserRoleEntity
   ): CompanyUserRoleOutput {
-    return {
-      ...companyUserRoleEntity.toJSON(),
-      companyUser: companyUserRoleEntity.companyUser
-        ? CompanyUserOutputMapper.toOutput(companyUserRoleEntity.companyUser)
-        : null,
-      role: companyUserRoleEntity.role
-        ? RoleOutputMapper.toOutput(companyUserRoleEntity.role)
-        : null,
-    };
+    return companyUserRoleEntity
+      ? {
+          ...companyUserRoleEntity.toJSON(),
+          companyUser: companyUserRoleEntity.companyUser
+            ? CompanyUserOutputMapper.toOutput(
+                companyUserRoleEntity.companyUser
+              )
+            : null,
+          role: companyUserRoleEntity.role
+            ? RoleOutputMapper.toOutput(companyUserRoleEntity.role)
+            : null,
+        }
+      : null;
   }
 }

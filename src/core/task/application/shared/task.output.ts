@@ -23,6 +23,6 @@ export type TaskOutput = {
 
 export class TaskOutputMapper {
   static toOutput(taskEntity: TaskEntity): TaskOutput {
-    return taskEntity.toJSON();
+    return taskEntity ? taskEntity.toJSON() : null;
   }
 }

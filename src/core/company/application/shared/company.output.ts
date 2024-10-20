@@ -19,6 +19,6 @@ export type CompanyOutput = {
 
 export class CompanyOutputMapper {
   static toOutput(companyEntity: CompanyEntity): CompanyOutput {
-    return companyEntity.toJSON();
+    return companyEntity ? companyEntity.toJSON() : null;
   }
 }

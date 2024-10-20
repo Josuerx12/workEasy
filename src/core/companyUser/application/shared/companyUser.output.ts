@@ -39,22 +39,24 @@ export type CompanyUserOutput = {
 
 export class CompanyUserOutputMapper {
   static toOutput(companyUserEntity: CompanyUserEntity): CompanyUserOutput {
-    return {
-      ...companyUserEntity.toJSON(),
-      company: companyUserEntity.company
-        ? CompanyOutputMapper.toOutput(companyUserEntity.company)
-        : null,
-      user: companyUserEntity.user
-        ? UserOutputMapper.toOutput(companyUserEntity.user)
-        : null,
-      tasks: companyUserEntity.tasks
-        ? companyUserEntity.tasks.map((t) => TaskOutputMapper.toOutput(t))
-        : null,
-      companyUserRoles: companyUserEntity.companyUserRoles
-        ? companyUserEntity.companyUserRoles.map((c) =>
-            CompanyUserRoleOutputMapper.toOutput(c)
-          )
-        : null,
-    };
+    return companyUserEntity
+      ? {
+          ...companyUserEntity.toJSON(),
+          company: companyUserEntity.company
+            ? CompanyOutputMapper.toOutput(companyUserEntity.company)
+            : null,
+          user: companyUserEntity.user
+            ? UserOutputMapper.toOutput(companyUserEntity.user)
+            : null,
+          tasks: companyUserEntity.tasks
+            ? companyUserEntity.tasks.map((t) => TaskOutputMapper.toOutput(t))
+            : null,
+          companyUserRoles: companyUserEntity.companyUserRoles
+            ? companyUserEntity.companyUserRoles.map((c) =>
+                CompanyUserRoleOutputMapper.toOutput(c)
+              )
+            : null,
+        }
+      : null;
   }
 }

@@ -21,6 +21,6 @@ export type AddressOutput = {
 
 export class AddressOutputMapper {
   static toOutput(addressEntity: AddressEntity): AddressOutput {
-    return addressEntity.toJSON();
+    return addressEntity ? addressEntity.toJSON() : null;
   }
 }

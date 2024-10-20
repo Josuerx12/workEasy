@@ -17,6 +17,6 @@ export type UserOutput = {
 
 export class UserOutputMapper {
   static toOutput(userEntity: UserEntity): UserOutput {
-    return userEntity.toJSON();
+    return userEntity ? userEntity.toJSON() : null;
   }
 }

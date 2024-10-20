@@ -18,6 +18,8 @@ export class CompanyTaskCategoryOutputMapper {
   static toOutput(
     companyTaskCategoryEntity: CompanyTaskCategoryEntity
   ): CompanyTaskCategoryOutput {
-    return companyTaskCategoryEntity.toJSON();
+    return companyTaskCategoryEntity
+      ? companyTaskCategoryEntity.toJSON()
+      : null;
   }
 }
