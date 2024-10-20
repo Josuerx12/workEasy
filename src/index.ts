@@ -4,6 +4,6 @@ import { Bootstrap } from "./server/bootstrap";
 
 const app = new Bootstrap();
 
-app.start();
+// app.start();
 
 export const handler = serverless(app.app);

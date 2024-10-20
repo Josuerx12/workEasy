@@ -1,0 +1,61 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: jcdev022
+service: workeasybackend
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    NODE_ENV: production
+    PASSWORD: ${env:PASSWORD}
+    DATABASE_URL: ${env:DATABASE_URL}
+    AWS_ACCESS_KEY_VERCEL: ${env:AWS_ACCESS_KEY_VERCEL}
+    AWS_SECRET_KEY_VERCEL: ${env:AWS_SECRET_KEY_VERCEL}
+    AWS_REGION_VERCEL: ${env:AWS_REGION_VERCEL}
+    AVATAR_BUCKET: ${env:AVATAR_BUCKET}
+    SECRET: ${env:SECRET}
+
+functions:
+  app:
+    handler: dist/index.handler
+    timeout: 10
+    memorySize: 512 # Ajuste de memória
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Token
+              - token
+              - X-Amz-Date
+              - Authorization
+              - Access-Control-Allow-Origin
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Token
+              - token
+              - X-Amz-Date
+              - Authorization
+              - Access-Control-Allow-Origin
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+# package:
+#   exclude:
+#     - node_modules/**
+#     - src/**
+#     - .git/**
+#     - .vscode/**
