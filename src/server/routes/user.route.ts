@@ -43,7 +43,7 @@ userRoutes.put(
   }
 );
 
-userRoutes.get("/:id", async (req, res) => {
+userRoutes.get("/detail/:id", async (req, res) => {
   const getUseCase = new GetUserUseCase(userRepository);
 
   const output = await getUseCase.execute({ id: req.params.id });
@@ -58,3 +58,13 @@ userRoutes.get("/", async (req, res) => {
 
   return res.status(200).json(output);
 });
+
+userRoutes.get(
+  "/userAuthenticated",
+  authGuard.authenticate,
+  async (req, res) => {
+    const output = req.user;
+
+    return res.status(200).json(output);
+  }
+);
