@@ -1,10 +1,8 @@
 import { Prisma } from "@prisma/client";
-import { UserModelMapper } from "src/core/user/infra/models/user.model.mapper";
-import { CompanyModelMapper } from "src/core/company/infra/models/company.model.mapper";
 import { RoleEntity } from "../../domain/entities/role.entity";
 
 export class RoleModelMapper {
-  static toModel(role: RoleEntity): Prisma.roleUncheckedCreateInput {
+  static toModel(role: RoleEntity): Prisma.roleCreateInput {
     return {
       id: role.id.value,
       description: role.description,

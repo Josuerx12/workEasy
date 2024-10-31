@@ -44,7 +44,7 @@ export class StoreCompanyUseCase
       email: input.email,
       name: input.name,
       phone: input.phone,
-      userId: newUser.id.value,
+      userId: newUser.id?.value,
       user: newUser,
     });
 

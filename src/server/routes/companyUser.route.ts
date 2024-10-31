@@ -13,35 +13,24 @@ const companyUserRepository = new CompanyUserRepository();
 
 const authGuard = new AuthGuard();
 
-companyUserRoutes.post(
-  "/",
-  authGuard.authenticate,
-  upload.single("avatar"),
-  async (req, res) => {
-    const storeUseCase = new StoreCompanyUserUseCase(companyUserRepository);
+companyUserRoutes.post("/", authGuard.authenticate, async (req, res) => {
+  const storeUseCase = new StoreCompanyUserUseCase(companyUserRepository);
 
-    const output = await storeUseCase.execute({ ...req.body, file: req.file });
+  const output = await storeUseCase.execute({ ...req.body });
 
-    return res.status(201).json(output);
-  }
-);
+  return res.status(201).json(output);
+});
 
-companyUserRoutes.put(
-  "/:id",
-  authGuard.authenticate,
-  upload.single("avatar"),
-  async (req, res) => {
-    const updateUseCase = new UpdateCompanyUserUseCase(companyUserRepository);
+companyUserRoutes.put("/:id", authGuard.authenticate, async (req, res) => {
+  const updateUseCase = new UpdateCompanyUserUseCase(companyUserRepository);
 
-    const output = await updateUseCase.execute({
-      id: req.params.id,
-      ...req.body,
-      file: req.file,
-    });
+  const output = await updateUseCase.execute({
+    id: req.params.id,
+    ...req.body,
+  });
 
-    return res.status(201).json(output);
-  }
-);
+  return res.status(201).json(output);
+});
 
 companyUserRoutes.get("/:id", async (req, res) => {
   const getUseCase = new GetCompanyUserUseCase(companyUserRepository);

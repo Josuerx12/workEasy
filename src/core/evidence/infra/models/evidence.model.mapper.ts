@@ -1,13 +1,19 @@
 import { Prisma } from "@prisma/client";
 import { EvidenceEntity } from "../../domain/entities/evidence.entity";
+import { TaskModelMapper } from "@src/core/task/infra/models/task.model.mapper";
 
 export class EvidenceModelMapper {
-  static toModel(
-    evidence: EvidenceEntity
-  ): Prisma.evidenceUncheckedCreateInput {
+  static toModel(evidence: EvidenceEntity): Prisma.evidenceCreateInput {
     return {
       id: evidence.id.value,
-      taskId: evidence.taskId.value,
+      task: {
+        connectOrCreate: {
+          where: {
+            id: evidence.taskId?.value,
+          },
+          create: TaskModelMapper.toModel(evidence.task),
+        },
+      },
       path: evidence.path,
       url: evidence.url,
     };

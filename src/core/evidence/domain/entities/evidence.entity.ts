@@ -1,3 +1,4 @@
+import { TaskEntity } from "@src/core/task/domain/entities/task.entity";
 import { Entity } from "src/core/shared/entity/entity";
 import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
 
@@ -7,7 +8,7 @@ export type EvidenceEntityProps = {
   path: string;
   url: string;
 
-  task: any[];
+  task: TaskEntity;
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -20,7 +21,7 @@ export class EvidenceEntity extends Entity {
   path: string;
   url: string;
 
-  task: any[];
+  task: TaskEntity;
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -44,7 +45,7 @@ export class EvidenceEntity extends Entity {
       taskId: this.taskId.value,
       path: this.path,
       url: this.url,
-      task: this.task,
+      task: this.task?.toJSON(),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,

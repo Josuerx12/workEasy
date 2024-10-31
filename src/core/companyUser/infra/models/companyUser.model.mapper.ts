@@ -9,13 +9,31 @@ import { CompanyUserRoleModelMapper } from "src/core/companyUserRole/infra/model
 export class CompanyUserModelMapper {
   static toModel(
     companyUser: CompanyUserEntity
-  ): Prisma.companyUserUncheckedCreateInput {
+  ): Prisma.companyUserCreateInput {
     return {
       id: companyUser.id.value,
-      userId: companyUser.userId.value,
-      companyId: companyUser.companyId.value,
       lat: companyUser.lat,
       long: companyUser.long,
+      user: companyUser.user
+        ? {
+            connectOrCreate: {
+              where: {
+                id: companyUser.userId?.value,
+              },
+              create: {
+                id: companyUser.user.id.value,
+                email: companyUser.user.email,
+                name: companyUser.user.name,
+                password: companyUser.user.password,
+              },
+            },
+          }
+        : undefined,
+      company: {
+        connect: {
+          id: companyUser.companyId?.value,
+        },
+      },
     };
   }
 

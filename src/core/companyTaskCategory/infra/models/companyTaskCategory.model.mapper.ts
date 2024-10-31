@@ -5,12 +5,16 @@ import { CompanyModelMapper } from "src/core/company/infra/models/company.model.
 export class CompanyTaskCategoryModelMapper {
   static toModel(
     companyTaskCategory: CompanyTaskCategoryEntity
-  ): Prisma.companyTaskCategoryUncheckedCreateInput {
+  ): Prisma.companyTaskCategoryCreateInput {
     return {
       id: companyTaskCategory.id.value,
-      companyId: companyTaskCategory.companyId.value,
       title: companyTaskCategory.title,
       description: companyTaskCategory.description,
+      company: {
+        connect: {
+          id: companyTaskCategory.companyId.value,
+        },
+      },
     };
   }
 

@@ -8,12 +8,12 @@ import { UserEntity } from "src/core/user/domain/entities/user.entity";
 export type CompanyUserEntityProps = {
   id?: string;
   companyId: string;
-  userId: string;
+  userId?: string;
   lat?: string;
   long?: string;
 
   company?: CompanyEntity;
-  user?: UserEntity;
+  user: UserEntity;
   tasks?: TaskEntity[];
   companyUserRoles?: CompanyUserRoleEntity[];
 
@@ -30,7 +30,7 @@ export class CompanyUserEntity extends Entity {
   long?: string;
 
   company?: CompanyEntity;
-  user?: UserEntity;
+  user: UserEntity;
   tasks?: TaskEntity[];
   companyUserRoles?: CompanyUserRoleEntity[];
 
@@ -43,9 +43,11 @@ export class CompanyUserEntity extends Entity {
 
     this.id = new Uuid(props.id);
     this.companyId = new Uuid(props.companyId);
-    this.userId = new Uuid(props.userId);
-    this.lat = props.lat;
-    this.long = props.long;
+    this.userId = props.userId
+      ? new Uuid(props.userId)
+      : props.user && new Uuid(props.user.id.value);
+    this.lat = props.lat ? props.lat : "0";
+    this.long = props.long ? props.long : "0";
 
     this.company = props.company;
     this.user = props.user;
@@ -62,8 +64,8 @@ export class CompanyUserEntity extends Entity {
   toJSON() {
     return {
       id: this.id.value,
-      companyId: this.companyId.value,
-      userId: this.userId.value,
+      companyId: this.companyId?.value,
+      userId: this.userId?.value,
       lat: this.lat,
       long: this.long,
 

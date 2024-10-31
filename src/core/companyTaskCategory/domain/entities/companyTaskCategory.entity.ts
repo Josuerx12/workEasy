@@ -48,7 +48,7 @@ export class CompanyTaskCategoryEntity extends Entity {
   toJSON() {
     return {
       id: this.id.value,
-      companyId: this.companyId.value,
+      companyId: this.companyId?.value,
       title: this.title,
       description: this.description,
       task: this.task,

@@ -12,6 +12,10 @@ export class GetCompanyUseCase implements UseCase<CompanyInput, CompanyOutput> {
     const companyEntity =
       await this.companyRepository.getCompanyByDocumentEmailOrId(input.id);
 
+    if (!companyEntity) {
+      throw new Error("Company not found");
+    }
+
     return CompanyOutputMapper.toOutput(companyEntity);
   }
 }

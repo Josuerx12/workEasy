@@ -91,7 +91,7 @@ export class CompanyEntity extends Entity {
       id: this.id.value,
       avatarId: this.avatarId?.value,
       userId: this.userId?.value,
-      addressId: this.addressId.value,
+      addressId: this.addressId?.value,
 
       name: this.name,
       email: this.email,
@@ -99,10 +99,12 @@ export class CompanyEntity extends Entity {
       documentType: this.documentType,
       phone: this.phone,
 
-      avatar: this.avatar.toJSON(),
-      companyUser: this.companyUser?.map((cu) => cu.toJSON()),
-      companyRequester: this.companyRequester?.map((cr) => cr.toJSON()),
-      companyTaskCategory: this.companyTaskCategory?.map((ctc) => ctc.toJSON()),
+      avatar: this.avatar?.toJSON(),
+      companyUser: this.companyUser?.map((cu) => cu?.toJSON()),
+      companyRequester: this.companyRequester?.map((cr) => cr?.toJSON()),
+      companyTaskCategory: this.companyTaskCategory?.map((ctc) =>
+        ctc?.toJSON()
+      ),
       companyClient: this.companyClient,
 
       createdAt: this.createdAt,

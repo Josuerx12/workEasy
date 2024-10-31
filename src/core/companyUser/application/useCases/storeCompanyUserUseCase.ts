@@ -5,9 +5,12 @@ import {
   CompanyUserOutput,
   CompanyUserOutputMapper,
 } from "../shared/companyUser.output";
+import { UserInput } from "src/core/user/application/useCases/storeUserUseCase";
+import { UserEntity } from "src/core/user/domain/entities/user.entity";
 export type StoreCompanyUserInput = {
   companyId: string;
-  userId: string;
+  userId?: string;
+  user: UserInput;
   lat?: string;
   long?: string;
 };
@@ -18,7 +21,9 @@ export class StoreCompanyUserUseCase
   constructor(private readonly companyUserRepository: ICompanyUserRepository) {}
 
   async execute(input: StoreCompanyUserInput): Promise<CompanyUserOutput> {
-    const companyUser = new CompanyUserEntity(input);
+    const user = new UserEntity(input.user);
+
+    const companyUser = new CompanyUserEntity({ ...input, user });
 
     await this.companyUserRepository.insert(companyUser);
 

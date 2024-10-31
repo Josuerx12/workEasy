@@ -8,11 +8,25 @@ import { TaskModelMapper } from "src/core/task/infra/models/task.model.mapper";
 export class CompanyRequesterModelMapper {
   static toModel(
     companyRequester: CompanyRequesterEntity
-  ): Prisma.companyRequesterUncheckedCreateInput {
+  ): Prisma.companyRequesterCreateInput {
     return {
       id: companyRequester.id.value,
-      userId: companyRequester.userId?.value,
-      companyId: companyRequester.companyId.value,
+      user: {
+        connectOrCreate: {
+          where: {
+            id: companyRequester.userId?.value,
+          },
+          create: UserModelMapper.toModel(companyRequester.user),
+        },
+      },
+      company: {
+        connectOrCreate: {
+          where: {
+            id: companyRequester.companyId?.value,
+          },
+          create: CompanyModelMapper.toModel(companyRequester.company),
+        },
+      },
     };
   }
 

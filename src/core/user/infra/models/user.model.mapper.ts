@@ -1,17 +1,25 @@
 import { Prisma } from "@prisma/client";
 import { UserEntity } from "../../domain/entities/user.entity";
+import { AvatarModelMapper } from "@src/core/avatar/infra/models/avatar.model.mapper";
 
 export class UserModelMapper {
-  static toModel(user: UserEntity): Prisma.userUncheckedCreateInput {
+  static toModel(user: UserEntity): Prisma.userCreateInput {
     return {
       id: user.id.value,
-      avatarId: user.avatarId?.value,
       email: user.email,
       name: user.name,
       password: user.password,
       admin: user.admin,
       moderator: user.moderator,
       support: user.support,
+      avatar: user.avatar && {
+        connectOrCreate: {
+          where: {
+            id: user.avatarId.value,
+          },
+          create: AvatarModelMapper.toModel(user.avatar),
+        },
+      },
     };
   }
 

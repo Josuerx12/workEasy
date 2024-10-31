@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "_moduleAliases": {
-    "src": "dist/src"
+    "@src": "dist/src"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

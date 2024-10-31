@@ -2,6 +2,7 @@ import { db } from "src/infra/dbConn";
 import { ICompanyUserRepository } from "../../domain/contracts/companyUserRepository.interface";
 import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
 import { CompanyUserModelMapper } from "../models/companyUser.model.mapper";
+import { Prisma } from "@prisma/client";
 
 export class CompanyUserRepository implements ICompanyUserRepository {
   async getCompanyUserByDocumentEmailOrId(
@@ -51,8 +52,6 @@ export class CompanyUserRepository implements ICompanyUserRepository {
     await db.companyUser.create({
       data: CompanyUserModelMapper.toModel(entity),
     });
-
-    return;
   }
 
   async update(entity: CompanyUserEntity): Promise<void> {

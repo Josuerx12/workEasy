@@ -4,7 +4,7 @@ import { UserModelMapper } from "src/core/user/infra/models/user.model.mapper";
 import { CompanyModelMapper } from "src/core/company/infra/models/company.model.mapper";
 
 export class AvatarModelMapper {
-  static toModel(avatar: AvatarEntity): Prisma.avatarUncheckedCreateInput {
+  static toModel(avatar: AvatarEntity): Prisma.avatarCreateInput {
     return {
       id: avatar.id.value,
       path: avatar.path,

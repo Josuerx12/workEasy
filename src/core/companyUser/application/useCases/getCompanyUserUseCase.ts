@@ -8,9 +8,7 @@ export type CompanyUserInput = {
   id: string;
 };
 
-export class GetCompanyUserUseCase
-  implements UseCase<CompanyUserInput, CompanyUserOutput>
-{
+export class GetCompanyUserUseCase implements UseCase<CompanyUserInput, any> {
   constructor(private readonly companyUserRepository: ICompanyUserRepository) {}
   async execute(input: CompanyUserInput): Promise<CompanyUserOutput> {
     const companyUserEntity =

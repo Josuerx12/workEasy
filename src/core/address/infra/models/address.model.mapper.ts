@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { AddressEntity } from "../../domain/entities/address.entity";
 
 export class AddressModelMapper {
-  static toModel(address: AddressEntity): Prisma.addressUncheckedCreateInput {
+  static toModel(address: AddressEntity): Prisma.addressCreateInput {
     return {
       id: address.id.value,
       cep: address.cep,

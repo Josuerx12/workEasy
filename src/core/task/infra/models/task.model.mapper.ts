@@ -6,15 +6,27 @@ import { CompanyUserModelMapper } from "src/core/companyUser/infra/models/compan
 import { EvidenceModelMapper } from "src/core/evidence/infra/models/evidence.model.mapper";
 
 export class TaskModelMapper {
-  static toModel(entity: TaskEntity): Prisma.taskUncheckedCreateInput {
+  static toModel(entity: TaskEntity): Prisma.taskCreateInput {
     return {
       id: entity.id.value,
-      companyRequesterId: entity.companyRequesterId.value,
-      companyTaskCategoryId: entity.companyTaskCategoryId.value,
-      companyUserId: entity.companyUserId.value,
       description: entity.description,
       title: entity.title,
       status: entity.status,
+      companyRequester: {
+        connect: {
+          id: entity.companyRequesterId?.value,
+        },
+      },
+      companyTaskCategory: {
+        connect: {
+          id: entity.companyTaskCategoryId?.value,
+        },
+      },
+      companyUser: {
+        connect: {
+          id: entity.companyUserId?.value,
+        },
+      },
     };
   }
 

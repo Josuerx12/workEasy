@@ -6,11 +6,25 @@ import { RoleModelMapper } from "src/core/role/infra/models/role.model.mapper";
 export class CompanyUserRoleModelMapper {
   static toModel(
     companyUserRole: CompanyUserRoleEntity
-  ): Prisma.companyUserRoleUncheckedCreateInput {
+  ): Prisma.companyUserRoleCreateInput {
     return {
       id: companyUserRole.id.value,
-      companyUserId: companyUserRole.companyUserId.value,
-      roleId: companyUserRole.roleId.value,
+      companyUser: {
+        connectOrCreate: {
+          where: {
+            id: companyUserRole.companyUserId?.value,
+          },
+          create: CompanyUserModelMapper.toModel(companyUserRole.companyUser),
+        },
+      },
+      role: {
+        connectOrCreate: {
+          where: {
+            id: companyUserRole.roleId?.value,
+          },
+          create: RoleModelMapper.toModel(companyUserRole.role),
+        },
+      },
     };
   }
 

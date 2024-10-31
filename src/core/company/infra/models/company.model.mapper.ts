@@ -1,18 +1,42 @@
 import { Prisma } from "@prisma/client";
 import { CompanyEntity } from "../../domain/entities/company.entity";
 import { UserModelMapper } from "src/core/user/infra/models/user.model.mapper";
+import { AvatarModelMapper } from "@src/core/avatar/infra/models/avatar.model.mapper";
+import { AddressModelMapper } from "@src/core/address/infra/models/address.model.mapper";
 
 export class CompanyModelMapper {
-  static toModel(company: CompanyEntity): Prisma.companyUncheckedCreateInput {
+  static toModel(company: CompanyEntity): Prisma.companyCreateInput {
     return {
       id: company.id.value,
-      avatarId: company.avatarId?.value,
       email: company.email,
       name: company.name,
       document: company.document,
       documentType: company.documentType,
       phone: company.phone,
-      userId: company.userId.value,
+      avatar: {
+        connectOrCreate: {
+          where: {
+            id: company.avatarId?.value,
+          },
+          create: AvatarModelMapper.toModel(company.avatar),
+        },
+      },
+      user: {
+        connectOrCreate: {
+          where: {
+            id: company.userId?.value,
+          },
+          create: UserModelMapper.toModel(company.user),
+        },
+      },
+      address: {
+        connectOrCreate: {
+          where: {
+            id: company.addressId?.value,
+          },
+          create: AddressModelMapper.toModel(company.address),
+        },
+      },
     };
   }
 
@@ -21,9 +45,12 @@ export class CompanyModelMapper {
       id: model.id,
       email: model.email,
       name: model.name,
-      avatar: model.avatar,
       userId: model.userId,
+      avatar: model.avatar ? AvatarModelMapper.toEntity(model.avatar) : null,
       user: model.user ? UserModelMapper.toEntity(model.user) : null,
+      address: model.address
+        ? AddressModelMapper.toEntity(model.address)
+        : null,
       avatarId: model.avatarId,
       document: model.document,
       documentType: model.documentType,
