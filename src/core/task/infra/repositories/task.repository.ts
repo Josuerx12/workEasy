@@ -30,7 +30,7 @@ export class TaskRepository implements ITaskRepository {
 
   async insertEvidences(entities: EvidenceEntity[]) {
     await db.evidence.createMany({
-      data: entities.map((e) => EvidenceModelMapper.toModel(e)),
+      data: entities.map((e) => EvidenceModelMapper.toModel(e)) as any,
     });
   }
 
