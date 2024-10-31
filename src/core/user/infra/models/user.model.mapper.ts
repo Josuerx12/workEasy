@@ -12,7 +12,7 @@ export class UserModelMapper {
       admin: user.admin,
       moderator: user.moderator,
       support: user.support,
-      avatar: user.avatar && {
+      avatar: (user.avatar || user.avatarId?.value) && {
         connectOrCreate: {
           where: {
             id: user.avatarId.value,

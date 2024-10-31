@@ -13,7 +13,7 @@ export class CompanyModelMapper {
       document: company.document,
       documentType: company.documentType,
       phone: company.phone,
-      avatar: {
+      avatar: (company.avatar || company.avatarId?.value) && {
         connectOrCreate: {
           where: {
             id: company.avatarId?.value,
