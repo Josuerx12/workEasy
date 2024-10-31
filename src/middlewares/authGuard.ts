@@ -36,9 +36,7 @@ export class AuthGuard {
           },
         });
 
-        console.log(user, decodedToken);
-
-        const userEntity = UserModelMapper.toEntity(user);
+        const userEntity = user ? UserModelMapper.toEntity(user) : null;
         req.user = userEntity?.toJSON();
 
         next();

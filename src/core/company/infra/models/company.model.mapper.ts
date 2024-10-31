@@ -13,14 +13,6 @@ export class CompanyModelMapper {
       document: company.document,
       documentType: company.documentType,
       phone: company.phone,
-      avatar: (company.avatar || company.avatarId?.value) && {
-        connectOrCreate: {
-          where: {
-            id: company.avatarId?.value,
-          },
-          create: AvatarModelMapper.toModel(company.avatar),
-        },
-      },
       user: {
         connectOrCreate: {
           where: {
@@ -29,7 +21,15 @@ export class CompanyModelMapper {
           create: UserModelMapper.toModel(company.user),
         },
       },
-      address: {
+      avatar: (company.avatar || company.avatarId?.value) && {
+        connectOrCreate: {
+          where: {
+            id: company.avatarId?.value,
+          },
+          create: AvatarModelMapper.toModel(company.avatar),
+        },
+      },
+      address: (company.address || company.addressId?.value) && {
         connectOrCreate: {
           where: {
             id: company.addressId?.value,

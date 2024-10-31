@@ -1,4 +1,7 @@
+import { AvatarOutput } from "@src/core/avatar/application/shared/avatar.output";
 import { CompanyEntity } from "../../domain/entities/company.entity";
+import { CompanyUserOutput } from "@src/core/companyUser/application/shared/companyUser.output";
+import { UserOutput } from "@src/core/user/application/shared/user.output";
 
 export type CompanyOutput = {
   id: string;
@@ -8,9 +11,10 @@ export type CompanyOutput = {
   email: string;
   phone: string;
 
-  companyUser?: any[];
+  companyUser?: CompanyUserOutput[];
   avatarId?: string;
-  avatar?: any;
+  avatar?: AvatarOutput;
+  user?: UserOutput;
 
   createdAt?: Date;
   updatedAt?: Date;

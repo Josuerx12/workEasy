@@ -55,8 +55,6 @@ export class StoreCompanyUseCase
     }
 
     input.file && this.uploadAndUpdateAvatar(company, input.file);
-
-    await this.userRepository.insert(newUser);
     await this.companyRepository.insert(company);
 
     return CompanyOutputMapper.toOutput(company);

@@ -74,6 +74,7 @@ export class CompanyEntity extends Entity {
     this.phone = props.phone;
 
     this.avatar = props.avatar;
+    this.user = props.user;
     this.companyUser = props.companyUser;
     this.companyRequester = props.companyRequester;
     this.companyTaskCategory = props.companyTaskCategory;
@@ -100,6 +101,7 @@ export class CompanyEntity extends Entity {
       phone: this.phone,
 
       avatar: this.avatar?.toJSON(),
+      user: this.user?.toJSON(),
       companyUser: this.companyUser?.map((cu) => cu?.toJSON()),
       companyRequester: this.companyRequester?.map((cr) => cr?.toJSON()),
       companyTaskCategory: this.companyTaskCategory?.map((ctc) =>
