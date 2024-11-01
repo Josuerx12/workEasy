@@ -1,10 +1,9 @@
 import { Prisma } from "@prisma/client";
+import { CompanyModelMapper } from "@src/core/company/infra/models/company.model.mapper";
+import { CompanyUserRoleModelMapper } from "@src/core/companyUserRole/infra/models/companyUserRole.model.mapper";
+import { TaskModelMapper } from "@src/core/task/infra/models/task.model.mapper";
+import { UserModelMapper } from "@src/core/user/infra/models/user.model.mapper";
 import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
-import { CompanyModelMapper } from "src/core/company/infra/models/company.model.mapper";
-import { AvatarModelMapper } from "src/core/avatar/infra/models/avatar.model.mapper";
-import { UserModelMapper } from "src/core/user/infra/models/user.model.mapper";
-import { TaskModelMapper } from "src/core/task/infra/models/task.model.mapper";
-import { CompanyUserRoleModelMapper } from "src/core/companyUserRole/infra/models/companyUserRole.model.mapper";
 
 export class CompanyUserModelMapper {
   static toModel(

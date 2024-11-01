@@ -1,10 +1,10 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
-import { AuthOutput } from "../shared/auth.output";
-import { IAuthRepository } from "../../domain/contracts/authRepository.interface";
+import { UseCase } from "@src/core/shared/useCase/useCase";
+import { UserOutputMapper } from "@src/core/user/application/shared/user.output";
+import { UserEntity } from "@src/core/user/domain/entities/user.entity";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
-import { UserEntity } from "src/core/user/domain/entities/user.entity";
-import { UserOutputMapper } from "src/core/user/application/shared/user.output";
+import { IAuthRepository } from "../../domain/contracts/authRepository.interface";
+import { AuthOutput } from "../shared/auth.output";
 
 export type LoginInput = {
   email: string;

@@ -1,11 +1,11 @@
 import {
   CompanyUserOutput,
   CompanyUserOutputMapper,
-} from "src/core/companyUser/application/shared/companyUser.output";
+} from "@src/core/companyUser/application/shared/companyUser.output";
 import {
   RoleOutput,
   RoleOutputMapper,
-} from "src/core/role/application/shared/role.output";
+} from "@src/core/role/application/shared/role.output";
 import { CompanyUserRoleEntity } from "../../domain/entities/companyUserRole.entity";
 
 export type CompanyUserRoleOutput = {

@@ -1,11 +1,11 @@
-import { Entity } from "src/core/shared/entity/entity";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
-import { UserEntityValidator } from "../validators/user.validator";
+import { AvatarEntity } from "@src/core/avatar/domain/entities/avatar.entity";
+import { CompanyEntity } from "@src/core/company/domain/entities/company.entity";
+import { CompanyRequesterEntity } from "@src/core/companyRequester/domain/entities/companyRequester.entity";
+import { CompanyUserEntity } from "@src/core/companyUser/domain/entities/companyUser.entity";
+import { Entity } from "@src/core/shared/entity/entity";
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
 import { hashSync } from "bcryptjs";
-import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
-import { CompanyUserEntity } from "src/core/companyUser/domain/entities/companyUser.entity";
-import { CompanyEntity } from "src/core/company/domain/entities/company.entity";
-import { CompanyRequesterEntity } from "src/core/companyRequester/domain/entities/companyRequester.entity";
+import { UserEntityValidator } from "../validators/user.validator";
 
 export type UserEntityProps = {
   id?: string;

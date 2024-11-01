@@ -1,4 +1,4 @@
-import { db } from "src/infra/dbConn";
+import { db } from "@src/infra/dbConn";
 import { ICompanyRequesterRepository } from "../../domain/contracts/companyRequesterRepository.interface";
 import { CompanyRequesterEntity } from "../../domain/entities/companyRequester.entity";
 import { CompanyRequesterModelMapper } from "../models/companyRequester.model.mapper";

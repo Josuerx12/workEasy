@@ -1,5 +1,4 @@
 import serverless from "serverless-http";
-import "module-alias/register";
 import { Bootstrap } from "./server/bootstrap";
 
 const app = new Bootstrap();

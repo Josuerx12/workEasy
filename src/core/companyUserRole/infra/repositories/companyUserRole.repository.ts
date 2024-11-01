@@ -1,4 +1,4 @@
-import { db } from "src/infra/dbConn";
+import { db } from "@src/infra/dbConn";
 import { ICompanyUserRoleRepository } from "../../domain/contracts/companyUserRoleRepository.interface";
 import { CompanyUserRoleEntity } from "../../domain/entities/companyUserRole.entity";
 import { CompanyUserRoleModelMapper } from "../models/companyUserRole.model.mapper";

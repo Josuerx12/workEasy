@@ -1,14 +1,9 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { ICompanyUserRepository } from "../../domain/contracts/companyUserRepository.interface";
 import {
   CompanyUserOutput,
   CompanyUserOutputMapper,
 } from "../shared/companyUser.output";
-import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
-import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
-import s3 from "src/infra/s3Client";
-import sharp from "sharp";
 
 export type UpdateCompanyUserInput = {
   id: string;

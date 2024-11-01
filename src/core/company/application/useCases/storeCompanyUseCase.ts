@@ -1,14 +1,14 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
-import { CompanyOutput, CompanyOutputMapper } from "../shared/company.output";
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { AddressEntity } from "@src/core/address/domain/entities/address.entity";
+import { AvatarEntity } from "@src/core/avatar/domain/entities/avatar.entity";
+import { UseCase } from "@src/core/shared/useCase/useCase";
+import { IUserRepository } from "@src/core/user/domain/contracts/userRepository.interface";
+import { UserEntity } from "@src/core/user/domain/entities/user.entity";
+import s3 from "@src/infra/s3Client";
+import sharp from "sharp";
 import { ICompanyRepository } from "../../domain/contracts/companyRepository.interface";
 import { CompanyEntity } from "../../domain/entities/company.entity";
-import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import sharp from "sharp";
-import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
-import s3 from "src/infra/s3Client";
-import { IUserRepository } from "src/core/user/domain/contracts/userRepository.interface";
-import { UserEntity } from "src/core/user/domain/entities/user.entity";
-import { AddressEntity } from "src/core/address/domain/entities/address.entity";
+import { CompanyOutput, CompanyOutputMapper } from "../shared/company.output";
 
 export type StoreCompanyInput = {
   name: string;

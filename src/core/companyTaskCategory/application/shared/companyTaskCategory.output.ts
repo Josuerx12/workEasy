@@ -1,4 +1,4 @@
-import { CompanyOutput } from "src/core/company/application/shared/company.output";
+import { CompanyOutput } from "@src/core/company/application/shared/company.output";
 import { CompanyTaskCategoryEntity } from "../../domain/entities/companyTaskCategory.entity";
 
 export type CompanyTaskCategoryOutput = {

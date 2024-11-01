@@ -1,8 +1,7 @@
 import {
   UserOutput,
   UserOutputMapper,
-} from "src/core/user/application/shared/user.output";
-import { UserEntity } from "src/core/user/domain/entities/user.entity";
+} from "@src/core/user/application/shared/user.output";
 
 export type AuthOutput = {
   token: string;

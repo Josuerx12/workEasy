@@ -1,9 +1,9 @@
 import "express-async-errors";
 import express from "express";
 import { routes } from "./router";
-import { errorHandler } from "src/middlewares/errorHandler";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
+import { errorHandler } from "@src/middlewares/errorHandler";
 
 export class Bootstrap {
   app: express.Application;

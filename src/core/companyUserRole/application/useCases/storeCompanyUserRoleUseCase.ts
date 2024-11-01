@@ -1,10 +1,11 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { ICompanyUserRoleRepository } from "../../domain/contracts/companyUserRoleRepository.interface";
 import { CompanyUserRoleEntity } from "../../domain/entities/companyUserRole.entity";
 import {
   CompanyUserRoleOutput,
   CompanyUserRoleOutputMapper,
 } from "../shared/companyUserRole.output";
+
 export type StoreCompanyUserRoleInput = {
   companyUserId: string;
   roleId: string;

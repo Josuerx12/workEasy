@@ -1,11 +1,11 @@
+import { GetAllTaskUseCase } from "@src/core/task/application/useCases/getAllTaskUseCase";
+import { GetTaskUseCase } from "@src/core/task/application/useCases/getTaskUseCase";
+import { StoreTaskUseCase } from "@src/core/task/application/useCases/storeTaskUseCase";
+import { UpdateTaskUseCase } from "@src/core/task/application/useCases/updateTaskUseCase";
+import { TaskRepository } from "@src/core/task/infra/repositories/task.repository";
+import { AuthGuard } from "@src/middlewares/authGuard";
+import upload from "@src/middlewares/multerMiddleware";
 import { Router } from "express";
-import { GetAllTaskUseCase } from "src/core/task/application/useCases/getAllTaskUseCase";
-import { GetTaskUseCase } from "src/core/task/application/useCases/getTaskUseCase";
-import { StoreTaskUseCase } from "src/core/task/application/useCases/storeTaskUseCase";
-import { UpdateTaskUseCase } from "src/core/task/application/useCases/updateTaskUseCase";
-import { TaskRepository } from "src/core/task/infra/repositories/task.repository";
-import { AuthGuard } from "src/middlewares/authGuard";
-import upload from "src/middlewares/multerMiddleware";
 
 export const taskRoutes = Router();
 

@@ -1,9 +1,9 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
+import { ICompanyTaskCategoryRepository } from "../../domain/contracts/companyTaskCategoryRepository.interface";
 import {
   CompanyTaskCategoryOutput,
   CompanyTaskCategoryOutputMapper,
 } from "../shared/companyTaskCategory.output";
-import { ICompanyTaskCategoryRepository } from "../../domain/contracts/companyTaskCategoryRepository.interface";
 
 export type GetAllCompanyTaskCategoryInput = {
   page?: number;

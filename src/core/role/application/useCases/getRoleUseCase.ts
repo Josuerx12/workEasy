@@ -1,6 +1,6 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
-import { RoleOutput, RoleOutputMapper } from "../shared/role.output";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { IRoleRepository } from "../../domain/contracts/role.interface";
+import { RoleOutput, RoleOutputMapper } from "../shared/role.output";
 
 export type GetRoleInput = {
   id: string;

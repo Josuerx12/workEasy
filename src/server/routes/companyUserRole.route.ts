@@ -1,9 +1,9 @@
+import { DeleteCompanyUserRoleUseCase } from "@src/core/companyUserRole/application/useCases/deleteCompanyUserRoleUseCase";
+import { GetAllCompanyUserRoleUseCase } from "@src/core/companyUserRole/application/useCases/getAllCompanyUserUseCase";
+import { StoreCompanyUserRoleUseCase } from "@src/core/companyUserRole/application/useCases/storeCompanyUserRoleUseCase";
+import { CompanyUserRoleRepository } from "@src/core/companyUserRole/infra/repositories/companyUserRole.repository";
+import { AuthGuard } from "@src/middlewares/authGuard";
 import { Router } from "express";
-import { DeleteCompanyUserRoleUseCase } from "src/core/companyUserRole/application/useCases/deleteCompanyUserRoleUseCase";
-import { GetAllCompanyUserRoleUseCase } from "src/core/companyUserRole/application/useCases/getAllCompanyUserUseCase";
-import { StoreCompanyUserRoleUseCase } from "src/core/companyUserRole/application/useCases/storeCompanyUserRoleUseCase";
-import { CompanyUserRoleRepository } from "src/core/companyUserRole/infra/repositories/companyUserRole.repository";
-import { AuthGuard } from "src/middlewares/authGuard";
 
 export const companyUserRoleRoutes = Router();
 

@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
+import { CompanyUserModelMapper } from "@src/core/companyUser/infra/models/companyUser.model.mapper";
+import { RoleModelMapper } from "@src/core/role/infra/models/role.model.mapper";
 import { CompanyUserRoleEntity } from "../../domain/entities/companyUserRole.entity";
-import { CompanyUserModelMapper } from "src/core/companyUser/infra/models/companyUser.model.mapper";
-import { RoleModelMapper } from "src/core/role/infra/models/role.model.mapper";
 
 export class CompanyUserRoleModelMapper {
   static toModel(

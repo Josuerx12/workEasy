@@ -1,6 +1,6 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
-import { UserOutput, UserOutputMapper } from "../shared/user.output";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { IUserRepository } from "../../domain/contracts/userRepository.interface";
+import { UserOutput, UserOutputMapper } from "../shared/user.output";
 
 export type input = {
   page?: number;

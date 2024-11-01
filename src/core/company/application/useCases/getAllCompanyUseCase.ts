@@ -1,6 +1,6 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
-import { CompanyOutput, CompanyOutputMapper } from "../shared/company.output";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { ICompanyRepository } from "../../domain/contracts/companyRepository.interface";
+import { CompanyOutput, CompanyOutputMapper } from "../shared/company.output";
 
 export type input = {
   page?: number;

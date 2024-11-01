@@ -1,6 +1,6 @@
+import { LoginUseCase } from "@src/core/auth/application/useCases/loginUseCase";
+import { AuthRepository } from "@src/core/auth/infra/repositories/auth.repository";
 import { Router } from "express";
-import { LoginUseCase } from "src/core/auth/application/useCases/loginUseCase";
-import { AuthRepository } from "src/core/auth/infra/repositories/auth.repository";
 
 export const authRoutes = Router();
 

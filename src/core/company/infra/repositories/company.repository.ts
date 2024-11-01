@@ -1,9 +1,9 @@
-import { db } from "src/infra/dbConn";
+import { AddressEntity } from "@src/core/address/domain/entities/address.entity";
+import { AddressModelMapper } from "@src/core/address/infra/models/address.model.mapper";
+import { db } from "@src/infra/dbConn";
 import { ICompanyRepository } from "../../domain/contracts/companyRepository.interface";
 import { CompanyEntity } from "../../domain/entities/company.entity";
 import { CompanyModelMapper } from "../models/company.model.mapper";
-import { AddressEntity } from "src/core/address/domain/entities/address.entity";
-import { AddressModelMapper } from "src/core/address/infra/models/address.model.mapper";
 
 export class CompanyRepository implements ICompanyRepository {
   async getCompanyByDocumentEmailOrId(filter: string): Promise<CompanyEntity> {

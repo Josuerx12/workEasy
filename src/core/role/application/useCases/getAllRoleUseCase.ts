@@ -1,4 +1,4 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { IRoleRepository } from "../../domain/contracts/role.interface";
 import { RoleOutput, RoleOutputMapper } from "../shared/role.output";
 

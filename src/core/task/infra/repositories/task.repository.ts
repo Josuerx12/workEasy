@@ -1,9 +1,9 @@
-import { db } from "src/infra/dbConn";
+import { EvidenceEntity } from "@src/core/evidence/domain/entities/evidence.entity";
+import { EvidenceModelMapper } from "@src/core/evidence/infra/models/evidence.model.mapper";
+import { db } from "@src/infra/dbConn";
 import { ITaskRepository } from "../../domain/contracts/taskRepository.interface";
 import { TaskEntity } from "../../domain/entities/task.entity";
 import { TaskModelMapper } from "../models/task.model.mapper";
-import { EvidenceEntity } from "src/core/evidence/domain/entities/evidence.entity";
-import { EvidenceModelMapper } from "src/core/evidence/infra/models/evidence.model.mapper";
 
 export class TaskRepository implements ITaskRepository {
   async getById(id: string): Promise<TaskEntity> {

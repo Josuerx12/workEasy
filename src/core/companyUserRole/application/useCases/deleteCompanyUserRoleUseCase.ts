@@ -1,4 +1,4 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { ICompanyUserRoleRepository } from "../../domain/contracts/companyUserRoleRepository.interface";
 
 export type DeleteCompanyUserRoleinput = {

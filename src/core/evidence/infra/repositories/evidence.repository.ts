@@ -1,4 +1,4 @@
-import { db } from "src/infra/dbConn";
+import { db } from "@src/infra/dbConn";
 import { IEvidenceRepository } from "../../domain/contracts/evidenceRepository.interface";
 import { EvidenceEntity } from "../../domain/entities/evidence.entity";
 import { EvidenceModelMapper } from "../models/evidence.model.mapper";

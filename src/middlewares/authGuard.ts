@@ -1,7 +1,7 @@
 import { verify } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { db } from "src/infra/dbConn";
-import { UserModelMapper } from "src/core/user/infra/models/user.model.mapper";
+import { UserModelMapper } from "@src/core/user/infra/models/user.model.mapper";
 
 export class AuthGuard {
   authenticate(req: Request, res: Response, next: NextFunction) {

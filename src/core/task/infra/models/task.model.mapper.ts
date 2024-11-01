@@ -1,9 +1,9 @@
 import { Prisma } from "@prisma/client";
+import { CompanyRequesterModelMapper } from "@src/core/companyRequester/infra/models/companyRequester.model.mapper";
+import { CompanyTaskCategoryModelMapper } from "@src/core/companyTaskCategory/infra/models/companyTaskCategory.model.mapper";
+import { CompanyUserModelMapper } from "@src/core/companyUser/infra/models/companyUser.model.mapper";
+import { EvidenceModelMapper } from "@src/core/evidence/infra/models/evidence.model.mapper";
 import { TaskEntity } from "../../domain/entities/task.entity";
-import { CompanyRequesterModelMapper } from "src/core/companyRequester/infra/models/companyRequester.model.mapper";
-import { CompanyTaskCategoryModelMapper } from "src/core/companyTaskCategory/infra/models/companyTaskCategory.model.mapper";
-import { CompanyUserModelMapper } from "src/core/companyUser/infra/models/companyUser.model.mapper";
-import { EvidenceModelMapper } from "src/core/evidence/infra/models/evidence.model.mapper";
 
 export class TaskModelMapper {
   static toModel(entity: TaskEntity): Prisma.taskCreateInput {

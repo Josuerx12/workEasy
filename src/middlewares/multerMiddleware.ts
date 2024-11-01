@@ -1,5 +1,5 @@
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
 import multer, { memoryStorage } from "multer";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
 
 const upload = multer({
   storage: memoryStorage(),

@@ -1,4 +1,4 @@
-import { db } from "src/infra/dbConn";
+import { db } from "@src/infra/dbConn";
 import { ICompanyTaskCategoryRepository } from "../../domain/contracts/companyTaskCategoryRepository.interface";
 import { CompanyTaskCategoryEntity } from "../../domain/entities/companyTaskCategory.entity";
 import { CompanyTaskCategoryModelMapper } from "../models/companyTaskCategory.model.mapper";

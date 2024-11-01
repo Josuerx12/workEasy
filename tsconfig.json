@@ -1,7 +1,4 @@
 {
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
-  },
   "compilerOptions": {
     "module": "CommonJS",
     "declaration": true,
@@ -12,7 +9,6 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -21,12 +17,13 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "noErrorTruncation": true,
+    "allowJs": true,
     "strict": true,
+    "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": ["./src/*"]
     }
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  }
 }

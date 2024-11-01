@@ -1,8 +1,8 @@
 import { Prisma } from "@prisma/client";
-import { CompanyEntity } from "../../domain/entities/company.entity";
-import { UserModelMapper } from "src/core/user/infra/models/user.model.mapper";
-import { AvatarModelMapper } from "@src/core/avatar/infra/models/avatar.model.mapper";
 import { AddressModelMapper } from "@src/core/address/infra/models/address.model.mapper";
+import { AvatarModelMapper } from "@src/core/avatar/infra/models/avatar.model.mapper";
+import { UserModelMapper } from "@src/core/user/infra/models/user.model.mapper";
+import { CompanyEntity } from "../../domain/entities/company.entity";
 
 export class CompanyModelMapper {
   static toModel(company: CompanyEntity): Prisma.companyCreateInput {

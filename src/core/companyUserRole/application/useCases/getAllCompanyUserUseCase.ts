@@ -1,9 +1,10 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { ICompanyUserRoleRepository } from "../../domain/contracts/companyUserRoleRepository.interface";
 import {
   CompanyUserRoleOutput,
   CompanyUserRoleOutputMapper,
 } from "../shared/companyUserRole.output";
+
 export type input = {
   page?: number;
   perPage?: number;

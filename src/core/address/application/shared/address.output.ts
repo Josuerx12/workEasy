@@ -1,4 +1,4 @@
-import { CompanyOutput } from "src/core/company/application/shared/company.output";
+import { CompanyOutput } from "@src/core/company/application/shared/company.output";
 import { AddressEntity } from "../../domain/entities/address.entity";
 
 export type AddressOutput = {

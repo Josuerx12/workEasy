@@ -1,4 +1,4 @@
-import { db } from "src/infra/dbConn";
+import { db } from "@src/infra/dbConn";
 import { IRoleRepository } from "../../domain/contracts/role.interface";
 import { RoleEntity } from "../../domain/entities/role.entity";
 import { RoleModelMapper } from "../models/role.model.mapper";

@@ -1,8 +1,8 @@
-import { EvidenceOutput } from "src/core/evidence/application/shared/evidence.output";
+import { CompanyRequesterOutput } from "@src/core/companyRequester/application/shared/companyRequester.output";
+import { CompanyTaskCategoryOutput } from "@src/core/companyTaskCategory/application/shared/companyTaskCategory.output";
+import { CompanyUserOutput } from "@src/core/companyUser/application/shared/companyUser.output";
+import { EvidenceOutput } from "@src/core/evidence/application/shared/evidence.output";
 import { TaskEntity } from "../../domain/entities/task.entity";
-import { CompanyUserOutput } from "src/core/companyUser/application/shared/companyUser.output";
-import { CompanyTaskCategoryOutput } from "src/core/companyTaskCategory/application/shared/companyTaskCategory.output";
-import { CompanyRequesterOutput } from "src/core/companyRequester/application/shared/companyRequester.output";
 
 export type TaskOutput = {
   id: string;

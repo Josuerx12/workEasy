@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { userRoutes } from "./routes/user.route";
+import { authRoutes } from "./routes/auth.route";
 import { companyRoutes } from "./routes/company.route";
-import { taskRoutes } from "./routes/task.route";
 import { companyRequesterRoutes } from "./routes/companyRequester.route";
+import { companyTaskCategoryRoutes } from "./routes/companyTaskCategory.route";
 import { companyUserRoutes } from "./routes/companyUser.route";
 import { companyUserRoleRoutes } from "./routes/companyUserRole.route";
-import { companyTaskCategoryRoutes } from "./routes/companyTaskCategory.route";
 import { roleRoutes } from "./routes/role.route";
-import { authRoutes } from "./routes/auth.route";
+import { taskRoutes } from "./routes/task.route";
+import { userRoutes } from "./routes/user.route";
 
 export const routes = Router();
 

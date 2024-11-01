@@ -1,5 +1,4 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
-import { CompanyTaskCategoryOutput } from "../shared/companyTaskCategory.output";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { ICompanyTaskCategoryRepository } from "../../domain/contracts/companyTaskCategoryRepository.interface";
 
 export type DeleteCompanyTaskCategoryInput = {

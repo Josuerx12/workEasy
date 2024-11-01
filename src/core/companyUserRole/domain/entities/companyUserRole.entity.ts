@@ -1,7 +1,7 @@
-import { CompanyUserEntity } from "src/core/companyUser/domain/entities/companyUser.entity";
-import { RoleEntity } from "src/core/role/domain/entities/role.entity";
-import { Entity } from "src/core/shared/entity/entity";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
+import { CompanyUserEntity } from "@src/core/companyUser/domain/entities/companyUser.entity";
+import { RoleEntity } from "@src/core/role/domain/entities/role.entity";
+import { Entity } from "@src/core/shared/entity/entity";
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
 
 export type CompanyUserRoleEntityProps = {
   id?: string;

@@ -1,11 +1,11 @@
+import { DeleteCompanyTaskCategoryUseCase } from "@src/core/companyTaskCategory/application/useCases/deleteCompanyTaskCategoryUseCase";
+import { GetAllCompanyTaskCategoryUseCase } from "@src/core/companyTaskCategory/application/useCases/getAllCompanyTaskCategoryUseCase";
+import { GetCompanyTaskCategoryUseCase } from "@src/core/companyTaskCategory/application/useCases/getCompanyTaskCategoryUseCase";
+import { StoreCompanyTaskCategoryUseCase } from "@src/core/companyTaskCategory/application/useCases/storeCompanyTaskCategoryUseCase";
+import { UpdateCompanyTaskCategoryUseCase } from "@src/core/companyTaskCategory/application/useCases/updateCompanyTaskCategoryUseCase";
+import { CompanyTaskCategoryRepository } from "@src/core/companyTaskCategory/infra/repositories/companyTaskCategory.repository";
+import { AuthGuard } from "@src/middlewares/authGuard";
 import { Router } from "express";
-import { DeleteCompanyTaskCategoryUseCase } from "src/core/companyTaskCategory/application/useCases/deleteCompanyTaskCategoryUseCase";
-import { GetAllCompanyTaskCategoryUseCase } from "src/core/companyTaskCategory/application/useCases/getAllCompanyTaskCategoryUseCase";
-import { GetCompanyTaskCategoryUseCase } from "src/core/companyTaskCategory/application/useCases/getCompanyTaskCategoryUseCase";
-import { StoreCompanyTaskCategoryUseCase } from "src/core/companyTaskCategory/application/useCases/storeCompanyTaskCategoryUseCase";
-import { UpdateCompanyTaskCategoryUseCase } from "src/core/companyTaskCategory/application/useCases/updateCompanyTaskCategoryUseCase";
-import { CompanyTaskCategoryRepository } from "src/core/companyTaskCategory/infra/repositories/companyTaskCategory.repository";
-import { AuthGuard } from "src/middlewares/authGuard";
 
 export const companyTaskCategoryRoutes = Router();
 

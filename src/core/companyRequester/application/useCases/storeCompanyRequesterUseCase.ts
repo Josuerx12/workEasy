@@ -1,10 +1,11 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { ICompanyRequesterRepository } from "../../domain/contracts/companyRequesterRepository.interface";
 import { CompanyRequesterEntity } from "../../domain/entities/companyRequester.entity";
 import {
   CompanyRequesterOutput,
   CompanyRequesterOutputMapper,
 } from "../shared/companyRequester.output";
+
 export type StoreCompanyRequesterInput = {
   companyId: string;
   userId: string;

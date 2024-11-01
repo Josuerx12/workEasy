@@ -1,4 +1,4 @@
-import { db } from "src/infra/dbConn";
+import { db } from "@src/infra/dbConn";
 import { IAvatarRepository } from "../../domain/contracts/avatarRepository.interface";
 import { AvatarEntity } from "../../domain/entities/avatar.entity";
 import { AvatarModelMapper } from "../models/avatar.model.mapper";

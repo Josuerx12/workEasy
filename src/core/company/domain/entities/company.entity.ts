@@ -1,14 +1,12 @@
-import { hashSync } from "bcryptjs";
-import { Entity } from "src/core/shared/entity/entity";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
+import { AddressEntity } from "@src/core/address/domain/entities/address.entity";
+import { AvatarEntity } from "@src/core/avatar/domain/entities/avatar.entity";
+import { CompanyRequesterEntity } from "@src/core/companyRequester/domain/entities/companyRequester.entity";
+import { CompanyTaskCategoryEntity } from "@src/core/companyTaskCategory/domain/entities/companyTaskCategory.entity";
+import { CompanyUserEntity } from "@src/core/companyUser/domain/entities/companyUser.entity";
+import { Entity } from "@src/core/shared/entity/entity";
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
+import { UserEntity } from "@src/core/user/domain/entities/user.entity";
 import { CompanyEntityValidator } from "../validators/company.validator";
-import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
-import { string } from "zod";
-import { UserEntity } from "src/core/user/domain/entities/user.entity";
-import { CompanyUserEntity } from "src/core/companyUser/domain/entities/companyUser.entity";
-import { CompanyRequesterEntity } from "src/core/companyRequester/domain/entities/companyRequester.entity";
-import { CompanyTaskCategoryEntity } from "src/core/companyTaskCategory/domain/entities/companyTaskCategory.entity";
-import { AddressEntity } from "src/core/address/domain/entities/address.entity";
 
 export type CompanyEntityProps = {
   id?: string;

@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { UserEntity } from "../../domain/entities/user.entity";
-import { AvatarModelMapper } from "@src/core/avatar/infra/models/avatar.model.mapper";
+import { AvatarModelMapper } from "src/core/avatar/infra/models/avatar.model.mapper";
 
 export class UserModelMapper {
   static toModel(user: UserEntity): Prisma.userCreateInput {

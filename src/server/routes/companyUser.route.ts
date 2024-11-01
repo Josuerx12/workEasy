@@ -1,11 +1,10 @@
+import { GetAllCompanyUserUseCase } from "@src/core/companyUser/application/useCases/getAllCompanyUserUseCase";
+import { GetCompanyUserUseCase } from "@src/core/companyUser/application/useCases/getCompanyUserUseCase";
+import { StoreCompanyUserUseCase } from "@src/core/companyUser/application/useCases/storeCompanyUserUseCase";
+import { UpdateCompanyUserUseCase } from "@src/core/companyUser/application/useCases/updateCompanyUserUseCase";
+import { CompanyUserRepository } from "@src/core/companyUser/infra/repositories/companyUser.repository";
+import { AuthGuard } from "@src/middlewares/authGuard";
 import { Router } from "express";
-import { GetAllCompanyUserUseCase } from "src/core/companyUser/application/useCases/getAllCompanyUserUseCase";
-import { GetCompanyUserUseCase } from "src/core/companyUser/application/useCases/getCompanyUserUseCase";
-import { StoreCompanyUserUseCase } from "src/core/companyUser/application/useCases/storeCompanyUserUseCase";
-import { UpdateCompanyUserUseCase } from "src/core/companyUser/application/useCases/updateCompanyUserUseCase";
-import { CompanyUserRepository } from "src/core/companyUser/infra/repositories/companyUser.repository";
-import { AuthGuard } from "src/middlewares/authGuard";
-import upload from "src/middlewares/multerMiddleware";
 
 export const companyUserRoutes = Router();
 

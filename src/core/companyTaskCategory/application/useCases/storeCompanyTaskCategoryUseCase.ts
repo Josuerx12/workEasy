@@ -1,10 +1,10 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
+import { ICompanyTaskCategoryRepository } from "../../domain/contracts/companyTaskCategoryRepository.interface";
+import { CompanyTaskCategoryEntity } from "../../domain/entities/companyTaskCategory.entity";
 import {
   CompanyTaskCategoryOutput,
   CompanyTaskCategoryOutputMapper,
 } from "../shared/companyTaskCategory.output";
-import { ICompanyTaskCategoryRepository } from "../../domain/contracts/companyTaskCategoryRepository.interface";
-import { CompanyTaskCategoryEntity } from "../../domain/entities/companyTaskCategory.entity";
 
 export type StoreCompanyTaskCategoryInput = {
   companyId: string;

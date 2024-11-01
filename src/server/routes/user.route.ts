@@ -1,11 +1,11 @@
+import { GetAllUsersUseCase } from "@src/core/user/application/useCases/getAllUserUseCase";
+import { GetUserUseCase } from "@src/core/user/application/useCases/getUserUseCase";
+import { StoreUserUseCase } from "@src/core/user/application/useCases/storeUserUseCase";
+import { UpdateUserUseCase } from "@src/core/user/application/useCases/updateUserUseCase";
+import { UserRepository } from "@src/core/user/infra/repositories/user.repository";
+import { AuthGuard } from "@src/middlewares/authGuard";
+import upload from "@src/middlewares/multerMiddleware";
 import { Router } from "express";
-import { GetAllUsersUseCase } from "src/core/user/application/useCases/getAllUserUseCase";
-import { GetUserUseCase } from "src/core/user/application/useCases/getUserUseCase";
-import { StoreUserUseCase } from "src/core/user/application/useCases/storeUserUseCase";
-import { UpdateUserUseCase } from "src/core/user/application/useCases/updateUserUseCase";
-import { UserRepository } from "src/core/user/infra/repositories/user.repository";
-import { AuthGuard } from "src/middlewares/authGuard";
-import upload from "src/middlewares/multerMiddleware";
 
 export const userRoutes = Router();
 

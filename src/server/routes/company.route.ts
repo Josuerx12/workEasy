@@ -1,12 +1,12 @@
+import { GetAllCompanyUseCase } from "@src/core/company/application/useCases/getAllCompanyUseCase";
+import { GetCompanyUseCase } from "@src/core/company/application/useCases/getCompanyUseCase";
+import { StoreCompanyUseCase } from "@src/core/company/application/useCases/storeCompanyUseCase";
+import { UpdateCompanyUseCase } from "@src/core/company/application/useCases/updateCompanyUseCase";
+import { CompanyRepository } from "@src/core/company/infra/repositories/company.repository";
+import { UserRepository } from "@src/core/user/infra/repositories/user.repository";
+import { AuthGuard } from "@src/middlewares/authGuard";
+import upload from "@src/middlewares/multerMiddleware";
 import { Router } from "express";
-import { GetAllCompanyUseCase } from "src/core/company/application/useCases/getAllCompanyUseCase";
-import { GetCompanyUseCase } from "src/core/company/application/useCases/getCompanyUseCase";
-import { StoreCompanyUseCase } from "src/core/company/application/useCases/storeCompanyUseCase";
-import { UpdateCompanyUseCase } from "src/core/company/application/useCases/updateCompanyUseCase";
-import { CompanyRepository } from "src/core/company/infra/repositories/company.repository";
-import { UserRepository } from "src/core/user/infra/repositories/user.repository";
-import { AuthGuard } from "src/middlewares/authGuard";
-import upload from "src/middlewares/multerMiddleware";
 
 export const companyRoutes = Router();
 

@@ -1,6 +1,6 @@
-import { CompanyEntity } from "src/core/company/domain/entities/company.entity";
-import { Entity } from "src/core/shared/entity/entity";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
+import { CompanyEntity } from "@src/core/company/domain/entities/company.entity";
+import { Entity } from "@src/core/shared/entity/entity";
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
 
 export type AddressEntityProps = {
   id?: string;

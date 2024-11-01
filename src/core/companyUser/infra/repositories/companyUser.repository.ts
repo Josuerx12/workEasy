@@ -1,8 +1,7 @@
-import { db } from "src/infra/dbConn";
+import { db } from "@src/infra/dbConn";
 import { ICompanyUserRepository } from "../../domain/contracts/companyUserRepository.interface";
 import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
 import { CompanyUserModelMapper } from "../models/companyUser.model.mapper";
-import { Prisma } from "@prisma/client";
 
 export class CompanyUserRepository implements ICompanyUserRepository {
   async getCompanyUserByDocumentEmailOrId(

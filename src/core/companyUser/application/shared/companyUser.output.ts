@@ -1,24 +1,20 @@
 import {
-  AvatarOutput,
-  AvatarOutputMapper,
-} from "src/core/avatar/application/shared/avatar.output";
-import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
-import {
   CompanyOutput,
   CompanyOutputMapper,
-} from "src/core/company/application/shared/company.output";
-import {
-  TaskOutput,
-  TaskOutputMapper,
-} from "src/core/task/application/shared/task.output";
+} from "@src/core/company/application/shared/company.output";
 import {
   CompanyUserRoleOutput,
   CompanyUserRoleOutputMapper,
-} from "src/core/companyUserRole/application/shared/companyUserRole.output";
+} from "@src/core/companyUserRole/application/shared/companyUserRole.output";
+import {
+  TaskOutput,
+  TaskOutputMapper,
+} from "@src/core/task/application/shared/task.output";
 import {
   UserOutput,
   UserOutputMapper,
-} from "src/core/user/application/shared/user.output";
+} from "@src/core/user/application/shared/user.output";
+import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
 
 export type CompanyUserOutput = {
   id: string;

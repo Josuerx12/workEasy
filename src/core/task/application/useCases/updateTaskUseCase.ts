@@ -1,7 +1,7 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
-import { TaskOutput, TaskOutputMapper } from "../shared/task.output";
+import { UseCase } from "@src/core/shared/useCase/useCase";
 import { ITaskRepository } from "../../domain/contracts/taskRepository.interface";
 import { TaskEntity } from "../../domain/entities/task.entity";
+import { TaskOutput, TaskOutputMapper } from "../shared/task.output";
 
 export type UpdateTaskInput = {
   id: string;

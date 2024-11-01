@@ -1,11 +1,11 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
-import { CompanyOutput, CompanyOutputMapper } from "../shared/company.output";
-import { ICompanyRepository } from "../../domain/contracts/companyRepository.interface";
 import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
-import s3 from "src/infra/s3Client";
-import { CompanyEntity } from "../../domain/entities/company.entity";
+import { AvatarEntity } from "@src/core/avatar/domain/entities/avatar.entity";
+import { UseCase } from "@src/core/shared/useCase/useCase";
+import s3 from "@src/infra/s3Client";
 import sharp from "sharp";
+import { ICompanyRepository } from "../../domain/contracts/companyRepository.interface";
+import { CompanyEntity } from "../../domain/entities/company.entity";
+import { CompanyOutput, CompanyOutputMapper } from "../shared/company.output";
 
 export type UpdateCompanyInput = {
   id: string;

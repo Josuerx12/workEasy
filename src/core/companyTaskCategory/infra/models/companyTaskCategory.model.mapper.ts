@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
+import { CompanyModelMapper } from "@src/core/company/infra/models/company.model.mapper";
 import { CompanyTaskCategoryEntity } from "../../domain/entities/companyTaskCategory.entity";
-import { CompanyModelMapper } from "src/core/company/infra/models/company.model.mapper";
 
 export class CompanyTaskCategoryModelMapper {
   static toModel(

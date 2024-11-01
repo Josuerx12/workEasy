@@ -1,5 +1,5 @@
-import { Entity } from "src/core/shared/entity/entity";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
+import { Entity } from "@src/core/shared/entity/entity";
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
 
 export type RoleEntityProps = {
   id?: string;

@@ -1,9 +1,9 @@
-import { CompanyRequesterEntity } from "src/core/companyRequester/domain/entities/companyRequester.entity";
-import { CompanyTaskCategoryEntity } from "src/core/companyTaskCategory/domain/entities/companyTaskCategory.entity";
-import { CompanyUserEntity } from "src/core/companyUser/domain/entities/companyUser.entity";
-import { EvidenceEntity } from "src/core/evidence/domain/entities/evidence.entity";
-import { Entity } from "src/core/shared/entity/entity";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
+import { CompanyRequesterEntity } from "@src/core/companyRequester/domain/entities/companyRequester.entity";
+import { CompanyTaskCategoryEntity } from "@src/core/companyTaskCategory/domain/entities/companyTaskCategory.entity";
+import { CompanyUserEntity } from "@src/core/companyUser/domain/entities/companyUser.entity";
+import { EvidenceEntity } from "@src/core/evidence/domain/entities/evidence.entity";
+import { Entity } from "@src/core/shared/entity/entity";
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
 import { TaskEntityValidator } from "../validators/task.validator";
 
 export type TaskEntityProps = {

@@ -1,8 +1,7 @@
-import { hashSync } from "bcryptjs";
-import { CompanyEntity } from "src/core/company/domain/entities/company.entity";
-import { Entity } from "src/core/shared/entity/entity";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
-import { UserEntity } from "src/core/user/domain/entities/user.entity";
+import { CompanyEntity } from "@src/core/company/domain/entities/company.entity";
+import { Entity } from "@src/core/shared/entity/entity";
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
+import { UserEntity } from "@src/core/user/domain/entities/user.entity";
 
 export type AvatarEntityProps = {
   id?: string;

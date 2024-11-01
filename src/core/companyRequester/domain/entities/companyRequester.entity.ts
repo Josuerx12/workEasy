@@ -1,8 +1,8 @@
-import { Entity } from "src/core/shared/entity/entity";
-import { Uuid } from "src/core/shared/valueObjects/uuid.vo";
-import { CompanyEntity } from "src/core/company/domain/entities/company.entity";
-import { UserEntity } from "src/core/user/domain/entities/user.entity";
-import { TaskEntity } from "src/core/task/domain/entities/task.entity";
+import { CompanyEntity } from "@src/core/company/domain/entities/company.entity";
+import { Entity } from "@src/core/shared/entity/entity";
+import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
+import { TaskEntity } from "@src/core/task/domain/entities/task.entity";
+import { UserEntity } from "@src/core/user/domain/entities/user.entity";
 
 export type CompanyRequesterEntityProps = {
   id?: string;

@@ -1,10 +1,10 @@
+import { GetAllRoleUseCase } from "@src/core/role/application/useCases/getAllRoleUseCase";
+import { GetRoleUseCase } from "@src/core/role/application/useCases/getRoleUseCase";
+import { StoreRoleUseCase } from "@src/core/role/application/useCases/storeRoleUseCase";
+import { UpdateRoleUseCase } from "@src/core/role/application/useCases/updateRoleUseCase";
+import { RoleRepository } from "@src/core/role/infra/repositories/role.repository";
+import { AuthGuard } from "@src/middlewares/authGuard";
 import { Router } from "express";
-import { GetAllRoleUseCase } from "src/core/role/application/useCases/getAllRoleUseCase";
-import { GetRoleUseCase } from "src/core/role/application/useCases/getRoleUseCase";
-import { StoreRoleUseCase } from "src/core/role/application/useCases/storeRoleUseCase";
-import { UpdateRoleUseCase } from "src/core/role/application/useCases/updateRoleUseCase";
-import { RoleRepository } from "src/core/role/infra/repositories/role.repository";
-import { AuthGuard } from "src/middlewares/authGuard";
 
 export const roleRoutes = Router();
 

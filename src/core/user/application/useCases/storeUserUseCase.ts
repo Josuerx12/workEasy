@@ -1,10 +1,10 @@
-import s3 from "src/infra/s3Client";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { AvatarEntity } from "@src/core/avatar/domain/entities/avatar.entity";
+import s3 from "@src/infra/s3Client";
+import sharp from "sharp";
 import { IUserRepository } from "../../domain/contracts/userRepository.interface";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UserOutputMapper } from "../shared/user.output";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { AvatarEntity } from "src/core/avatar/domain/entities/avatar.entity";
-import sharp from "sharp";
 
 export type UserInput = {
   name: string;

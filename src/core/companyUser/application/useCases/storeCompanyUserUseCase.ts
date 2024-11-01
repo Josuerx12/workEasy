@@ -1,12 +1,13 @@
-import { UseCase } from "src/core/shared/useCase/useCase";
+import { UseCase } from "@src/core/shared/useCase/useCase";
+import { UserInput } from "@src/core/user/application/useCases/storeUserUseCase";
+import { UserEntity } from "@src/core/user/domain/entities/user.entity";
 import { ICompanyUserRepository } from "../../domain/contracts/companyUserRepository.interface";
 import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
 import {
   CompanyUserOutput,
   CompanyUserOutputMapper,
 } from "../shared/companyUser.output";
-import { UserInput } from "src/core/user/application/useCases/storeUserUseCase";
-import { UserEntity } from "src/core/user/domain/entities/user.entity";
+
 export type StoreCompanyUserInput = {
   companyId: string;
   userId?: string;

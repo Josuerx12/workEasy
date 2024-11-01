@@ -1,7 +1,6 @@
-import { UserEntity } from "src/core/user/domain/entities/user.entity";
+import { Prisma } from "@prisma/client";
 import { IAuthRepository } from "../../domain/contracts/authRepository.interface";
-import { Prisma, PrismaClient } from "@prisma/client";
-import { db } from "src/infra/dbConn";
+import { db } from "@src/infra/dbConn";
 
 export class AuthRepository implements IAuthRepository {
   async getUserByEmail(

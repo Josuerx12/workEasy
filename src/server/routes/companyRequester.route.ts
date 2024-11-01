@@ -1,11 +1,11 @@
+import { GetAllCompanyRequesterUseCase } from "@src/core/companyRequester/application/useCases/getAllCompanyRequesterUseCase";
+import { GetCompanyRequesterUseCase } from "@src/core/companyRequester/application/useCases/getCompanyRequesterUseCase";
+import { StoreCompanyRequesterUseCase } from "@src/core/companyRequester/application/useCases/storeCompanyRequesterUseCase";
+import { UpdateCompanyRequesterUseCase } from "@src/core/companyRequester/application/useCases/updateCompanyRequesterUseCase";
+import { CompanyRequesterRepository } from "@src/core/companyRequester/infra/repositories/companyRequester.repository";
+import { AuthGuard } from "@src/middlewares/authGuard";
+import upload from "@src/middlewares/multerMiddleware";
 import { Router } from "express";
-import { GetAllCompanyRequesterUseCase } from "src/core/companyRequester/application/useCases/getAllCompanyRequesterUseCase";
-import { GetCompanyRequesterUseCase } from "src/core/companyRequester/application/useCases/getCompanyRequesterUseCase";
-import { StoreCompanyRequesterUseCase } from "src/core/companyRequester/application/useCases/storeCompanyRequesterUseCase";
-import { UpdateCompanyRequesterUseCase } from "src/core/companyRequester/application/useCases/updateCompanyRequesterUseCase";
-import { CompanyRequesterRepository } from "src/core/companyRequester/infra/repositories/companyRequester.repository";
-import { AuthGuard } from "src/middlewares/authGuard";
-import upload from "src/middlewares/multerMiddleware";
 
 export const companyRequesterRoutes = Router();
 
