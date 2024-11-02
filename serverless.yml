@@ -17,6 +17,6 @@ provider:
 
 functions:
   app:
-    handler: dist/index.handler
+    handler: dist/src/index.handler
     timeout: 10
-    memorySize: 512 # Ajuste de memória
+    memorySize: 1024 # Ajuste de memória

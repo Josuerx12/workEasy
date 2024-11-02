@@ -8,13 +8,12 @@ export function errorHandler(
   next: NextFunction
 ) {
   if (err instanceof ZodError) {
-    res.status(400);
-    const formattedErrors = err.errors.map((e) => ({
-      path: e.path[0],
-      message: e.message,
-    }));
+    const formattedErrors = err.errors.reduce((acc, e) => {
+      acc[e.path[0]] = e.message;
+      return acc;
+    }, {} as Record<string, string>);
 
-    return res.json({ errors: formattedErrors });
+    return res.status(400).json({ errors: formattedErrors });
   }
 
   if (err.message) {
