@@ -1,6 +1,13 @@
 import { UseCase } from "@src/core/shared/useCase/useCase";
-import { ITaskRepository } from "../../domain/contracts/taskRepository.interface";
+import {
+  ITaskRepository,
+  TaskInputParams,
+} from "../../domain/contracts/taskRepository.interface";
 import { TaskOutput, TaskOutputMapper } from "../shared/task.output";
+import {
+  PaginationOutput,
+  PaginationOutputMapper,
+} from "@src/core/shared/paginationOutput";
 
 export type GetAllTaskInput = {
   page?: number;
@@ -9,13 +16,15 @@ export type GetAllTaskInput = {
 };
 
 export class GetAllTaskUseCase
-  implements UseCase<GetAllTaskInput, TaskOutput[]>
+  implements UseCase<GetAllTaskInput, PaginationOutput<TaskOutput>>
 {
   constructor(private readonly taskRepository: ITaskRepository) {}
 
-  async execute(input: GetAllTaskInput): Promise<TaskOutput[]> {
-    const tasks = await this.taskRepository.getAll();
+  async execute(input: GetAllTaskInput): Promise<PaginationOutput<TaskOutput>> {
+    const index = await this.taskRepository.getAll(new TaskInputParams(input));
 
-    return tasks.map((task) => TaskOutputMapper.toOutput(task));
+    const items = index.items.map((item) => TaskOutputMapper.toOutput(item));
+
+    return PaginationOutputMapper.toOutput(items, index);
   }
 }

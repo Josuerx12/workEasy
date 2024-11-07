@@ -1,11 +1,37 @@
 import { AvatarEntity } from "@src/core/avatar/domain/entities/avatar.entity";
 import { AvatarModelMapper } from "@src/core/avatar/infra/models/avatar.model.mapper";
 import { db } from "@src/infra/dbConn";
-import { IUserRepository } from "../../domain/contracts/userRepository.interface";
+import {
+  IUserRepository,
+  UserInputParams,
+  UserOutputParams,
+} from "../../domain/contracts/userRepository.interface";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UserModelMapper } from "../models/user.model.mapper";
 
 export class UserRepository implements IUserRepository {
+  async getAll(props: UserInputParams): Promise<UserOutputParams> {
+    const offset = (props.page - 1) * props.perPage;
+    const limit = props.perPage;
+
+    const allUsers = await db.user.findMany({
+      ...(props.filter && {
+        where: { OR: [{ email: props.filter }, { name: props.filter }] },
+      }),
+      skip: offset,
+      take: limit,
+    });
+    const count = await db.user.count();
+
+    const totalPages = Math.ceil(count / limit);
+
+    return new UserOutputParams({
+      items: allUsers.map((user) => UserModelMapper.toEntity(user)),
+      currentPage: props.page,
+      perPage: props.perPage,
+      total: totalPages,
+    });
+  }
   async getById(id: string): Promise<UserEntity> {
     const user = await db.user.findUnique({
       where: {
@@ -24,14 +50,6 @@ export class UserRepository implements IUserRepository {
     });
 
     return user ? UserModelMapper.toEntity(user) : null;
-  }
-
-  async getAll(): Promise<UserEntity[]> {
-    const allUsers = await db.user.findMany();
-
-    return allUsers
-      ? allUsers.map((user) => UserModelMapper.toEntity(user))
-      : null;
   }
 
   async insert(user: UserEntity): Promise<void> {

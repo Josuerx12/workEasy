@@ -42,7 +42,7 @@ companyUserRoutes.get("/:id", async (req, res) => {
 companyUserRoutes.get("/", async (req, res) => {
   const getAllUseCase = new GetAllCompanyUserUseCase(companyUserRepository);
 
-  const output = await getAllUseCase.execute(req.params);
+  const output = await getAllUseCase.execute(req.query);
 
   return res.status(200).json(output);
 });

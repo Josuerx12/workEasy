@@ -54,7 +54,7 @@ userRoutes.get("/detail/:id", async (req, res) => {
 userRoutes.get("/", async (req, res) => {
   const getAllUseCase = new GetAllUsersUseCase(userRepository);
 
-  const output = await getAllUseCase.execute(req.params);
+  const output = await getAllUseCase.execute(req.query);
 
   return res.status(200).json(output);
 });

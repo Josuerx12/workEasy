@@ -1,9 +1,16 @@
 import { UseCase } from "@src/core/shared/useCase/useCase";
-import { ICompanyUserRoleRepository } from "../../domain/contracts/companyUserRoleRepository.interface";
+import {
+  CompanyUserRoleInputParams,
+  ICompanyUserRoleRepository,
+} from "../../domain/contracts/companyUserRoleRepository.interface";
 import {
   CompanyUserRoleOutput,
   CompanyUserRoleOutputMapper,
 } from "../shared/companyUserRole.output";
+import {
+  PaginationOutput,
+  PaginationOutputMapper,
+} from "@src/core/shared/paginationOutput";
 
 export type input = {
   page?: number;
@@ -12,18 +19,22 @@ export type input = {
 };
 
 export class GetAllCompanyUserRoleUseCase
-  implements UseCase<input, CompanyUserRoleOutput[]>
+  implements UseCase<input, PaginationOutput<CompanyUserRoleOutput>>
 {
   constructor(
     private readonly companyUserRoleRepository: ICompanyUserRoleRepository
   ) {}
-  async execute(input: input): Promise<CompanyUserRoleOutput[]> {
-    const companies = await this.companyUserRoleRepository.getAll();
+  async execute(
+    input: input
+  ): Promise<PaginationOutput<CompanyUserRoleOutput>> {
+    const index = await this.companyUserRoleRepository.getAll(
+      new CompanyUserRoleInputParams(input)
+    );
 
-    return companies
-      ? companies.map((companyUserRole) =>
-          CompanyUserRoleOutputMapper.toOutput(companyUserRole)
-        )
-      : null;
+    const items = index.items.map((item) =>
+      CompanyUserRoleOutputMapper.toOutput(item)
+    );
+
+    return PaginationOutputMapper.toOutput(items, index);
   }
 }

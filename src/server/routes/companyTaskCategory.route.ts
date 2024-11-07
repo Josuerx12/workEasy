@@ -59,7 +59,7 @@ companyTaskCategoryRoutes.get("/", async (req, res) => {
     companyTaskCategoryRepository
   );
 
-  const output = await getAllUseCase.execute(req.params);
+  const output = await getAllUseCase.execute(req.query);
 
   return res.status(200).json(output);
 });

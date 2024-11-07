@@ -1,9 +1,40 @@
 import { db } from "@src/infra/dbConn";
-import { ICompanyRequesterRepository } from "../../domain/contracts/companyRequesterRepository.interface";
+import {
+  CompanyRequesterOutputParams,
+  GetAllCompanyRequesterInputParams,
+  ICompanyRequesterRepository,
+} from "../../domain/contracts/companyRequesterRepository.interface";
 import { CompanyRequesterEntity } from "../../domain/entities/companyRequester.entity";
 import { CompanyRequesterModelMapper } from "../models/companyRequester.model.mapper";
 
 export class CompanyRequesterRepository implements ICompanyRequesterRepository {
+  async getAll(
+    props: GetAllCompanyRequesterInputParams
+  ): Promise<CompanyRequesterOutputParams> {
+    const offset = (props.page - 1) * props.perPage;
+    const limit = props.perPage;
+
+    const companyRequesters = await db.companyRequester.findMany({
+      include: {
+        user: true,
+        company: true,
+      },
+      skip: offset,
+      take: limit,
+    });
+    const count = await db.companyRequester.count();
+
+    const totalPages = Math.ceil(count / limit);
+
+    return new CompanyRequesterOutputParams({
+      items: companyRequesters.map((companyRequester) =>
+        CompanyRequesterModelMapper.toEntity(companyRequester)
+      ),
+      currentPage: props.page,
+      perPage: props.perPage,
+      total: totalPages,
+    });
+  }
   async getCompanyRequesterByEmailOrId(
     filter: string
   ): Promise<CompanyRequesterEntity> {
@@ -28,21 +59,6 @@ export class CompanyRequesterRepository implements ICompanyRequesterRepository {
 
   getById(id: string): Promise<CompanyRequesterEntity> {
     throw new Error("Method not implemented.");
-  }
-
-  async getAll(): Promise<CompanyRequesterEntity[]> {
-    const companies = await db.companyRequester.findMany({
-      include: {
-        user: true,
-        company: true,
-      },
-    });
-
-    return companies
-      ? companies.map((companyRequester) =>
-          CompanyRequesterModelMapper.toEntity(companyRequester)
-        )
-      : null;
   }
 
   async insert(entity: CompanyRequesterEntity): Promise<void> {

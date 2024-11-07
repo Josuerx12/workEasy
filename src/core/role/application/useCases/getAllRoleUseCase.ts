@@ -1,6 +1,13 @@
 import { UseCase } from "@src/core/shared/useCase/useCase";
-import { IRoleRepository } from "../../domain/contracts/role.interface";
+import {
+  IRoleRepository,
+  RoleInputParams,
+} from "../../domain/contracts/role.interface";
 import { RoleOutput, RoleOutputMapper } from "../shared/role.output";
+import {
+  PaginationOutput,
+  PaginationOutputMapper,
+} from "@src/core/shared/paginationOutput";
 
 export type input = {
   page?: number;
@@ -8,11 +15,15 @@ export type input = {
   filter?: string;
 };
 
-export class GetAllRoleUseCase implements UseCase<input, RoleOutput[]> {
+export class GetAllRoleUseCase
+  implements UseCase<input, PaginationOutput<RoleOutput>>
+{
   constructor(private readonly roleRepository: IRoleRepository) {}
-  async execute(input: input): Promise<RoleOutput[]> {
-    const role = await this.roleRepository.getAll();
+  async execute(input: input): Promise<PaginationOutput<RoleOutput>> {
+    const index = await this.roleRepository.getAll(new RoleInputParams(input));
 
-    return role ? role.map((role) => RoleOutputMapper.toOutput(role)) : null;
+    const items = index.items.map((role) => RoleOutputMapper.toOutput(role));
+
+    return PaginationOutputMapper.toOutput(items, index);
   }
 }

@@ -1,6 +1,13 @@
 import { UseCase } from "@src/core/shared/useCase/useCase";
-import { IUserRepository } from "../../domain/contracts/userRepository.interface";
+import {
+  IUserRepository,
+  UserInputParams,
+} from "../../domain/contracts/userRepository.interface";
 import { UserOutput, UserOutputMapper } from "../shared/user.output";
+import {
+  PaginationOutput,
+  PaginationOutputMapper,
+} from "@src/core/shared/paginationOutput";
 
 export type input = {
   page?: number;
@@ -8,14 +15,18 @@ export type input = {
   filter?: string;
 };
 
-export class GetAllUsersUseCase implements UseCase<input, UserOutput[]> {
+export class GetAllUsersUseCase
+  implements UseCase<input, PaginationOutput<UserOutput>>
+{
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async execute(input: input): Promise<UserOutput[]> {
-    const entities = await this.userRepository.getAll();
+  async execute(input: input): Promise<PaginationOutput<UserOutput>> {
+    const index = await this.userRepository.getAll(new UserInputParams(input));
 
-    return entities
-      ? entities.map((entity) => UserOutputMapper.toOutput(entity))
-      : null;
+    const items = index.items.map((entity) =>
+      UserOutputMapper.toOutput(entity)
+    );
+
+    return PaginationOutputMapper.toOutput(items, index);
   }
 }

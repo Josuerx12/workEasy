@@ -1,11 +1,39 @@
 import { db } from "@src/infra/dbConn";
-import { ICompanyTaskCategoryRepository } from "../../domain/contracts/companyTaskCategoryRepository.interface";
+import {
+  CompanyTaskCategoryOutputParams,
+  GetAllCompanyTaskCategoryInputParams,
+  ICompanyTaskCategoryRepository,
+} from "../../domain/contracts/companyTaskCategoryRepository.interface";
 import { CompanyTaskCategoryEntity } from "../../domain/entities/companyTaskCategory.entity";
 import { CompanyTaskCategoryModelMapper } from "../models/companyTaskCategory.model.mapper";
 
 export class CompanyTaskCategoryRepository
   implements ICompanyTaskCategoryRepository
 {
+  async getAll(
+    props: GetAllCompanyTaskCategoryInputParams
+  ): Promise<CompanyTaskCategoryOutputParams> {
+    const offset = (props.page - 1) * props.perPage;
+    const limit = props.perPage;
+
+    const companyTaskCategorys = await db.companyTaskCategory.findMany({
+      skip: offset,
+      take: limit,
+    });
+    const count = await db.companyTaskCategory.count();
+
+    const totalPages = Math.ceil(count / limit);
+
+    return new CompanyTaskCategoryOutputParams({
+      items: companyTaskCategorys.map((companyTaskCategory) =>
+        CompanyTaskCategoryModelMapper.toEntity(companyTaskCategory)
+      ),
+      currentPage: props.page,
+      perPage: props.perPage,
+      total: totalPages,
+    });
+  }
+
   async getById(id: string): Promise<CompanyTaskCategoryEntity> {
     const companyTaskCategory = await db.companyTaskCategory.findUnique({
       where: { id },
@@ -13,16 +41,6 @@ export class CompanyTaskCategoryRepository
 
     return companyTaskCategory
       ? CompanyTaskCategoryModelMapper.toEntity(companyTaskCategory)
-      : null;
-  }
-
-  async getAll(): Promise<CompanyTaskCategoryEntity[]> {
-    const companyTaskCategorys = await db.companyTaskCategory.findMany();
-
-    return companyTaskCategorys
-      ? companyTaskCategorys.map((companyTaskCategory) =>
-          CompanyTaskCategoryModelMapper.toEntity(companyTaskCategory)
-        )
       : null;
   }
 

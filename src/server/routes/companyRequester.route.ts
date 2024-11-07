@@ -60,7 +60,7 @@ companyRequesterRoutes.get("/", async (req, res) => {
     companyRequesterRepository
   );
 
-  const output = await getAllUseCase.execute(req.params);
+  const output = await getAllUseCase.execute(req.query);
 
   return res.status(200).json(output);
 });

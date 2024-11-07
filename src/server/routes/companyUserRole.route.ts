@@ -26,7 +26,7 @@ companyUserRoleRoutes.get("/", async (req, res) => {
     companyUserRoleRepository
   );
 
-  const output = await getAllUseCase.execute(req.params);
+  const output = await getAllUseCase.execute(req.query);
 
   return res.status(200).json(output);
 });

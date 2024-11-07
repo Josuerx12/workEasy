@@ -4,6 +4,10 @@ import {
   CompanyRequesterOutput,
   CompanyRequesterOutputMapper,
 } from "../shared/companyRequester.output";
+import {
+  PaginationOutput,
+  PaginationOutputMapper,
+} from "@src/core/shared/paginationOutput";
 
 export type input = {
   page?: number;
@@ -12,18 +16,20 @@ export type input = {
 };
 
 export class GetAllCompanyRequesterUseCase
-  implements UseCase<input, CompanyRequesterOutput[]>
+  implements UseCase<input, PaginationOutput<CompanyRequesterOutput>>
 {
   constructor(
     private readonly companyRequesterRepository: ICompanyRequesterRepository
   ) {}
-  async execute(input: input): Promise<CompanyRequesterOutput[]> {
-    const companies = await this.companyRequesterRepository.getAll();
+  async execute(
+    input: input
+  ): Promise<PaginationOutput<CompanyRequesterOutput>> {
+    const index = await this.companyRequesterRepository.getAll(input);
 
-    return companies
-      ? companies.map((companyRequester) =>
-          CompanyRequesterOutputMapper.toOutput(companyRequester)
-        )
-      : null;
+    const items = index.items.map((item) =>
+      CompanyRequesterOutputMapper.toOutput(item)
+    );
+
+    return PaginationOutputMapper.toOutput(items, index);
   }
 }

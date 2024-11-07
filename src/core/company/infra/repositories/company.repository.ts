@@ -1,11 +1,72 @@
 import { AddressEntity } from "@src/core/address/domain/entities/address.entity";
 import { AddressModelMapper } from "@src/core/address/infra/models/address.model.mapper";
 import { db } from "@src/infra/dbConn";
-import { ICompanyRepository } from "../../domain/contracts/companyRepository.interface";
+import {
+  CompanyInputParams,
+  CompanyOutputParams,
+  ICompanyRepository,
+} from "../../domain/contracts/companyRepository.interface";
 import { CompanyEntity } from "../../domain/entities/company.entity";
 import { CompanyModelMapper } from "../models/company.model.mapper";
 
 export class CompanyRepository implements ICompanyRepository {
+  async getAll(props: CompanyInputParams): Promise<CompanyOutputParams> {
+    const offset = (props.page - 1) * props.perPage;
+    const limit = props.perPage;
+
+    const companies = await db.company.findMany({
+      ...(props.filter && {
+        where: {
+          OR: [
+            {
+              document: props.filter,
+            },
+            {
+              email: props.filter,
+            },
+            {
+              name: props.filter,
+            },
+            {
+              id: props.filter,
+            },
+          ],
+        },
+      }),
+      skip: offset,
+      take: limit,
+    });
+
+    const totalRecords = await db.company.count({
+      ...(props.filter && {
+        where: {
+          OR: [
+            {
+              document: props.filter,
+            },
+            {
+              email: props.filter,
+            },
+            {
+              name: props.filter,
+            },
+            {
+              id: props.filter,
+            },
+          ],
+        },
+      }),
+    });
+
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    return new CompanyOutputParams({
+      items: companies.map((company) => CompanyModelMapper.toEntity(company)),
+      total: totalPages,
+      currentPage: props.page,
+      perPage: props.perPage,
+    });
+  }
   async getCompanyByDocumentEmailOrId(filter: string): Promise<CompanyEntity> {
     const company = await db.company.findFirst({
       where: {
@@ -28,14 +89,6 @@ export class CompanyRepository implements ICompanyRepository {
 
   getById(id: string): Promise<CompanyEntity> {
     throw new Error("Method not implemented.");
-  }
-
-  async getAll(): Promise<CompanyEntity[]> {
-    const companies = await db.company.findMany();
-
-    return companies
-      ? companies.map((company) => CompanyModelMapper.toEntity(company))
-      : null;
   }
 
   async insert(entity: CompanyEntity): Promise<void> {

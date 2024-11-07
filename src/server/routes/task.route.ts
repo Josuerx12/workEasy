@@ -57,7 +57,7 @@ taskRoutes.get("/:id", async (req, res) => {
 taskRoutes.get("/", async (req, res) => {
   const getAllUseCase = new GetAllTaskUseCase(taskRepository);
 
-  const output = await getAllUseCase.execute(req.params);
+  const output = await getAllUseCase.execute(req.query);
 
   return res.status(200).json(output);
 });

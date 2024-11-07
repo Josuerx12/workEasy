@@ -4,6 +4,10 @@ import {
   CompanyTaskCategoryOutput,
   CompanyTaskCategoryOutputMapper,
 } from "../shared/companyTaskCategory.output";
+import {
+  PaginationOutput,
+  PaginationOutputMapper,
+} from "@src/core/shared/paginationOutput";
 
 export type GetAllCompanyTaskCategoryInput = {
   page?: number;
@@ -13,7 +17,10 @@ export type GetAllCompanyTaskCategoryInput = {
 
 export class GetAllCompanyTaskCategoryUseCase
   implements
-    UseCase<GetAllCompanyTaskCategoryInput, CompanyTaskCategoryOutput[]>
+    UseCase<
+      GetAllCompanyTaskCategoryInput,
+      PaginationOutput<CompanyTaskCategoryOutput>
+    >
 {
   constructor(
     private readonly companyTaskCategoryRepository: ICompanyTaskCategoryRepository
@@ -21,14 +28,11 @@ export class GetAllCompanyTaskCategoryUseCase
 
   async execute(
     input: GetAllCompanyTaskCategoryInput
-  ): Promise<CompanyTaskCategoryOutput[]> {
-    const allCompanyTasksCategory =
-      await this.companyTaskCategoryRepository.getAll();
-
-    return allCompanyTasksCategory
-      ? allCompanyTasksCategory.map((companyTasksCategory) =>
-          CompanyTaskCategoryOutputMapper.toOutput(companyTasksCategory)
-        )
-      : null;
+  ): Promise<PaginationOutput<CompanyTaskCategoryOutput>> {
+    const index = await this.companyTaskCategoryRepository.getAll(input);
+    const items = index.items.map((item) =>
+      CompanyTaskCategoryOutputMapper.toOutput(item)
+    );
+    return PaginationOutputMapper.toOutput(items, index);
   }
 }

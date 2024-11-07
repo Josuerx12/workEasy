@@ -1,9 +1,40 @@
 import { db } from "@src/infra/dbConn";
-import { ICompanyUserRepository } from "../../domain/contracts/companyUserRepository.interface";
+import {
+  CompanyUserOutputParams,
+  GetAllCompanyUserInputParams,
+  ICompanyUserRepository,
+} from "../../domain/contracts/companyUserRepository.interface";
 import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
 import { CompanyUserModelMapper } from "../models/companyUser.model.mapper";
 
 export class CompanyUserRepository implements ICompanyUserRepository {
+  async getAll(
+    props: GetAllCompanyUserInputParams
+  ): Promise<CompanyUserOutputParams> {
+    const offset = (props.page - 1) * props.perPage;
+    const limit = props.perPage;
+
+    const companyUsers = await db.companyUser.findMany({
+      include: {
+        company: true,
+        companyUserRole: true,
+        task: true,
+        user: true,
+      },
+      skip: offset,
+      take: limit,
+    });
+    const count = await db.companyUser.count();
+
+    const totalPages = Math.ceil(count / limit);
+
+    return new CompanyUserOutputParams({
+      currentPage: props.page,
+      perPage: props.perPage,
+      items: companyUsers.map((cu) => CompanyUserModelMapper.toEntity(cu)),
+      total: totalPages,
+    });
+  }
   async getCompanyUserByDocumentEmailOrId(
     filter: string
   ): Promise<CompanyUserEntity> {
@@ -28,23 +59,6 @@ export class CompanyUserRepository implements ICompanyUserRepository {
 
   getById(id: string): Promise<CompanyUserEntity> {
     throw new Error("Method not implemented.");
-  }
-
-  async getAll(): Promise<CompanyUserEntity[]> {
-    const companies = await db.companyUser.findMany({
-      include: {
-        company: true,
-        companyUserRole: true,
-        task: true,
-        user: true,
-      },
-    });
-
-    return companies
-      ? companies.map((companyUser) =>
-          CompanyUserModelMapper.toEntity(companyUser)
-        )
-      : null;
   }
 
   async insert(entity: CompanyUserEntity): Promise<void> {

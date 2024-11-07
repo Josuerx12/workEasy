@@ -42,7 +42,7 @@ roleRoutes.get("/:id", async (req, res) => {
 roleRoutes.get("/", async (req, res) => {
   const getAllUseCase = new GetAllRoleUseCase(roleRepository);
 
-  const output = await getAllUseCase.execute(req.params);
+  const output = await getAllUseCase.execute(req.query);
 
   return res.status(200).json(output);
 });
