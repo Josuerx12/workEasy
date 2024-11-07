@@ -1,5 +1,8 @@
 import { UseCase } from "@src/core/shared/useCase/useCase";
-import { ICompanyUserRepository } from "../../domain/contracts/companyUserRepository.interface";
+import {
+  CompanyUserInputParams,
+  ICompanyUserRepository,
+} from "../../domain/contracts/companyUserRepository.interface";
 import {
   CompanyUserOutput,
   CompanyUserOutputMapper,
@@ -20,7 +23,9 @@ export class GetAllCompanyUserUseCase
 {
   constructor(private readonly companyUserRepository: ICompanyUserRepository) {}
   async execute(input: input): Promise<PaginationOutput<CompanyUserOutput>> {
-    const index = await this.companyUserRepository.getAll(input);
+    const index = await this.companyUserRepository.getAll(
+      new CompanyUserInputParams(input)
+    );
 
     const items = index.items.map((item) =>
       CompanyUserOutputMapper.toOutput(item)

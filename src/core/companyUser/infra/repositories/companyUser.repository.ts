@@ -1,7 +1,7 @@
 import { db } from "@src/infra/dbConn";
 import {
   CompanyUserOutputParams,
-  GetAllCompanyUserInputParams,
+  CompanyUserInputParams,
   ICompanyUserRepository,
 } from "../../domain/contracts/companyUserRepository.interface";
 import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
@@ -9,7 +9,7 @@ import { CompanyUserModelMapper } from "../models/companyUser.model.mapper";
 
 export class CompanyUserRepository implements ICompanyUserRepository {
   async getAll(
-    props: GetAllCompanyUserInputParams
+    props: CompanyUserInputParams
   ): Promise<CompanyUserOutputParams> {
     const offset = (props.page - 1) * props.perPage;
     const limit = props.perPage;
