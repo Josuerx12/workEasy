@@ -8,6 +8,7 @@ import { companyUserRoleRoutes } from "./routes/companyUserRole.route";
 import { roleRoutes } from "./routes/role.route";
 import { taskRoutes } from "./routes/task.route";
 import { userRoutes } from "./routes/user.route";
+import { companyCustomerRoutes } from "./routes/companyCustomer.route";
 
 export const routes = Router();
 
@@ -20,6 +21,7 @@ routes.use("/company", companyRoutes);
 routes.use("/companyUser", companyUserRoutes);
 routes.use("/companyUserRole", companyUserRoleRoutes);
 routes.use("/companyRequester", companyRequesterRoutes);
+routes.use("/companyCustomer", companyCustomerRoutes);
 routes.use("/companyTaskCategory", companyTaskCategoryRoutes);
 routes.use("/task", taskRoutes);
 routes.use("/role", roleRoutes);

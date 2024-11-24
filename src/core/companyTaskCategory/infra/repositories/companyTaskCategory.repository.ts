@@ -11,16 +11,59 @@ export class CompanyTaskCategoryRepository
   implements ICompanyTaskCategoryRepository
 {
   async getAll(
-    props: GetAllCompanyTaskCategoryInputParams
+    props: GetAllCompanyTaskCategoryInputParams,
+    companyId: string
   ): Promise<CompanyTaskCategoryOutputParams> {
     const offset = (props.page - 1) * props.perPage;
     const limit = props.perPage;
 
     const companyTaskCategorys = await db.companyTaskCategory.findMany({
+      where: {
+        ...(props.filter && {
+          OR: [
+            {
+              title: {
+                contains: props.filter,
+                mode: "insensitive",
+              },
+            },
+            {
+              description: {
+                contains: props.filter,
+                mode: "insensitive",
+              },
+            },
+          ],
+        }),
+        companyId,
+      },
       skip: offset,
       take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
-    const count = await db.companyTaskCategory.count();
+    const count = await db.companyTaskCategory.count({
+      where: {
+        ...(props.filter && {
+          OR: [
+            {
+              title: {
+                contains: props.filter,
+                mode: "insensitive",
+              },
+            },
+            {
+              description: {
+                contains: props.filter,
+                mode: "insensitive",
+              },
+            },
+          ],
+        }),
+        companyId,
+      },
+    });
 
     const totalPages = Math.ceil(count / limit);
 

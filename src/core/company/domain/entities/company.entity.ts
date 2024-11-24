@@ -7,6 +7,7 @@ import { Entity } from "@src/core/shared/entity/entity";
 import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
 import { UserEntity } from "@src/core/user/domain/entities/user.entity";
 import { CompanyEntityValidator } from "../validators/company.validator";
+import { CompanyCustomerEntity } from "@src/core/companyCustomer/domain/entities/companyCustomer.entity";
 
 export type CompanyEntityProps = {
   id?: string;
@@ -26,7 +27,7 @@ export type CompanyEntityProps = {
   companyUser?: CompanyUserEntity[];
   companyRequester?: CompanyRequesterEntity[];
   companyTaskCategory?: CompanyTaskCategoryEntity[];
-  companyClient?: any[];
+  companyCustomer?: CompanyCustomerEntity[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -51,7 +52,7 @@ export class CompanyEntity extends Entity {
   companyUser?: CompanyUserEntity[];
   companyRequester?: CompanyRequesterEntity[];
   companyTaskCategory?: CompanyTaskCategoryEntity[];
-  companyClient?: any[];
+  companyCustomer?: CompanyCustomerEntity[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -67,16 +68,17 @@ export class CompanyEntity extends Entity {
 
     this.name = props.name;
     this.documentType = props.documentType;
-    this.document = props.document;
     this.email = props.email;
-    this.phone = props.phone;
+    this.document = props.document?.replace(/\D/g, "");
+    this.phone = props.phone?.replace(/\D/g, "");
 
     this.avatar = props.avatar;
     this.user = props.user;
+    this.address = props.address;
     this.companyUser = props.companyUser;
     this.companyRequester = props.companyRequester;
     this.companyTaskCategory = props.companyTaskCategory;
-    this.companyClient = props.companyClient;
+    this.companyCustomer = props.companyCustomer;
 
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
@@ -101,11 +103,12 @@ export class CompanyEntity extends Entity {
       avatar: this.avatar?.toJSON(),
       user: this.user?.toJSON(),
       companyUser: this.companyUser?.map((cu) => cu?.toJSON()),
+      address: this.address?.toJSON(),
       companyRequester: this.companyRequester?.map((cr) => cr?.toJSON()),
       companyTaskCategory: this.companyTaskCategory?.map((ctc) =>
         ctc?.toJSON()
       ),
-      companyClient: this.companyClient,
+      companyCustomer: this.companyCustomer?.map((cc) => cc.toJSON()),
 
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

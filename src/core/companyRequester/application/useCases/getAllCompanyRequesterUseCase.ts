@@ -10,6 +10,7 @@ import {
 } from "@src/core/shared/paginationOutput";
 
 export type input = {
+  companyId: string;
   page?: number;
   perPage?: number;
   filter?: string;

@@ -6,23 +6,72 @@ import {
 } from "../../domain/contracts/companyRequesterRepository.interface";
 import { CompanyRequesterEntity } from "../../domain/entities/companyRequester.entity";
 import { CompanyRequesterModelMapper } from "../models/companyRequester.model.mapper";
+import { Prisma } from "@prisma/client";
 
 export class CompanyRequesterRepository implements ICompanyRequesterRepository {
   async getAll(
-    props: GetAllCompanyRequesterInputParams
+    props: GetAllCompanyRequesterInputParams,
+    companyId: string
   ): Promise<CompanyRequesterOutputParams> {
     const offset = (props.page - 1) * props.perPage;
     const limit = props.perPage;
 
+    const filterCondition: Prisma.companyRequesterWhereInput = {
+      OR: [
+        {
+          company: {
+            OR: [
+              {
+                name: {
+                  contains: props.filter,
+                  mode: "insensitive",
+                },
+              },
+              {
+                document: {
+                  contains: props.filter.replace(/\D/g, ""),
+                },
+              },
+            ],
+          },
+        },
+        {
+          user: {
+            OR: [
+              {
+                name: {
+                  contains: props.filter,
+                  mode: "insensitive",
+                },
+              },
+              {
+                email: {
+                  contains: props.filter,
+                  mode: "insensitive",
+                },
+              },
+            ],
+          },
+        },
+      ],
+      companyId,
+    };
+
     const companyRequesters = await db.companyRequester.findMany({
+      where: props.filter ? filterCondition : { companyId },
       include: {
         user: true,
         company: true,
       },
       skip: offset,
       take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
-    const count = await db.companyRequester.count();
+    const count = await db.companyRequester.count({
+      where: props.filter ? filterCondition : { companyId },
+    });
 
     const totalPages = Math.ceil(count / limit);
 
@@ -43,6 +92,9 @@ export class CompanyRequesterRepository implements ICompanyRequesterRepository {
         OR: [
           {
             id: filter,
+          },
+          {
+            userId: filter,
           },
         ],
       },

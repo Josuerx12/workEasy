@@ -63,7 +63,13 @@ export class UserEntity extends Entity {
     this.deletedAt = props.deletedAt;
 
     this.validate();
-    this.hashPassword();
+  }
+
+  static create(props: UserEntityProps) {
+    return new this({
+      ...props,
+      password: hashSync(props.password, 10),
+    });
   }
 
   toJSON() {
@@ -91,6 +97,7 @@ export class UserEntity extends Entity {
       email: this.email,
     }).validate();
   }
+
   private hashPassword() {
     if (this.password) {
       this.password = hashSync(this.password, 10);

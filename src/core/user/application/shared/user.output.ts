@@ -1,4 +1,6 @@
+import { CompanyUserOutput } from "@src/core/companyUser/application/shared/companyUser.output";
 import { UserEntity } from "../../domain/entities/user.entity";
+import { CompanyUserRoleOutput } from "@src/core/companyUserRole/application/shared/companyUserRole.output";
 
 export type UserOutput = {
   id: string;
@@ -8,6 +10,9 @@ export type UserOutput = {
   password?: string;
   admin: boolean;
   moderator: boolean;
+  companyUser: CompanyUserOutput;
+  companyUserRoles: CompanyUserRoleOutput[];
+  tasks: any[];
   support: boolean;
   avatar?: any;
   createdAt?: Date;

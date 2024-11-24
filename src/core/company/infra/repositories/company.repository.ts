@@ -15,47 +15,79 @@ export class CompanyRepository implements ICompanyRepository {
     const limit = props.perPage;
 
     const companies = await db.company.findMany({
-      ...(props.filter && {
-        where: {
+      where: {
+        ...(props.filter?.search && {
           OR: [
             {
-              document: props.filter,
+              name: {
+                contains: props.filter.search,
+              },
             },
             {
-              email: props.filter,
+              document: props.filter.search.replace(/\D/g, ""),
             },
             {
-              name: props.filter,
-            },
-            {
-              id: props.filter,
+              email: props.filter.search,
             },
           ],
-        },
-      }),
+        }),
+        ...(props.filter?.city && {
+          address: {
+            city: {
+              contains: props.filter.city,
+            },
+          },
+        }),
+        ...(props.filter?.uf && {
+          address: {
+            state: {
+              contains: props.filter.uf,
+            },
+          },
+        }),
+      },
+      include: {
+        address: true,
+      },
       skip: offset,
       take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     const totalRecords = await db.company.count({
-      ...(props.filter && {
-        where: {
+      where: {
+        ...(props.filter?.search && {
           OR: [
             {
-              document: props.filter,
+              name: {
+                contains: props.filter.search,
+              },
             },
             {
-              email: props.filter,
+              document: props.filter.search.replace(/\D/g, ""),
             },
             {
-              name: props.filter,
-            },
-            {
-              id: props.filter,
+              email: props.filter.search,
             },
           ],
-        },
-      }),
+        }),
+        ...(props.filter?.city && {
+          address: {
+            city: {
+              contains: props.filter.city,
+            },
+          },
+        }),
+        ...(props.filter?.uf && {
+          address: {
+            state: {
+              contains: props.filter.uf,
+            },
+          },
+        }),
+      },
     });
 
     const totalPages = Math.ceil(totalRecords / limit);
@@ -72,7 +104,7 @@ export class CompanyRepository implements ICompanyRepository {
       where: {
         OR: [
           {
-            document: filter,
+            document: filter?.replace(/\D/g, ""),
           },
           {
             email: filter,

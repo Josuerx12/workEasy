@@ -6,15 +6,52 @@ import {
 } from "../../domain/contracts/companyUserRepository.interface";
 import { CompanyUserEntity } from "../../domain/entities/companyUser.entity";
 import { CompanyUserModelMapper } from "../models/companyUser.model.mapper";
+import { Prisma } from "@prisma/client";
 
 export class CompanyUserRepository implements ICompanyUserRepository {
   async getAll(
-    props: CompanyUserInputParams
+    props: CompanyUserInputParams,
+    companyId: string
   ): Promise<CompanyUserOutputParams> {
     const offset = (props.page - 1) * props.perPage;
     const limit = props.perPage;
 
+    const filterCondition: Prisma.companyUserWhereInput = {
+      OR: [
+        {
+          company: {
+            OR: [
+              {
+                name: {
+                  contains: props.filter,
+                },
+              },
+              {
+                document: props.filter?.replace(/\D/g, ""),
+              },
+            ],
+          },
+        },
+        {
+          user: {
+            OR: [
+              {
+                name: {
+                  contains: props.filter,
+                },
+              },
+              {
+                email: props.filter,
+              },
+            ],
+          },
+        },
+      ],
+      companyId,
+    };
+
     const companyUsers = await db.companyUser.findMany({
+      where: props.filter ? filterCondition : { companyId },
       include: {
         company: true,
         companyUserRole: true,
@@ -23,8 +60,14 @@ export class CompanyUserRepository implements ICompanyUserRepository {
       },
       skip: offset,
       take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
-    const count = await db.companyUser.count();
+
+    const count = await db.companyUser.count({
+      where: props.filter ? filterCondition : { companyId },
+    });
 
     const totalPages = Math.ceil(count / limit);
 
@@ -35,6 +78,7 @@ export class CompanyUserRepository implements ICompanyUserRepository {
       total: totalPages,
     });
   }
+
   async getCompanyUserByDocumentEmailOrId(
     filter: string
   ): Promise<CompanyUserEntity> {
@@ -43,6 +87,9 @@ export class CompanyUserRepository implements ICompanyUserRepository {
         OR: [
           {
             id: filter,
+          },
+          {
+            userId: filter,
           },
         ],
       },

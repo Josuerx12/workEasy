@@ -22,9 +22,13 @@ export class GetAllCompanyUserUseCase
   implements UseCase<input, PaginationOutput<CompanyUserOutput>>
 {
   constructor(private readonly companyUserRepository: ICompanyUserRepository) {}
-  async execute(input: input): Promise<PaginationOutput<CompanyUserOutput>> {
+  async execute(
+    input: input,
+    companyId: string
+  ): Promise<PaginationOutput<CompanyUserOutput>> {
     const index = await this.companyUserRepository.getAll(
-      new CompanyUserInputParams(input)
+      new CompanyUserInputParams(input),
+      companyId
     );
 
     const items = index.items.map((item) =>

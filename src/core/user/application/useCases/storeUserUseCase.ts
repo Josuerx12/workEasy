@@ -24,7 +24,7 @@ export class StoreUserUseCase {
       throw new Error("Usuário com email: " + input.email + ", já cadastrado!");
     }
 
-    const user = new UserEntity(input);
+    const user = UserEntity.create(input);
 
     input.file && this.uploadAvatar(user, input.file);
 

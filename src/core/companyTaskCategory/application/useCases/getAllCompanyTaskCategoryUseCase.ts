@@ -10,6 +10,7 @@ import {
 } from "@src/core/shared/paginationOutput";
 
 export type GetAllCompanyTaskCategoryInput = {
+  companyId: string;
   page?: number;
   perPage?: number;
   filter?: string;

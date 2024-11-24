@@ -3,19 +3,27 @@ import { GetCompanyUserUseCase } from "@src/core/companyUser/application/useCase
 import { StoreCompanyUserUseCase } from "@src/core/companyUser/application/useCases/storeCompanyUserUseCase";
 import { UpdateCompanyUserUseCase } from "@src/core/companyUser/application/useCases/updateCompanyUserUseCase";
 import { CompanyUserRepository } from "@src/core/companyUser/infra/repositories/companyUser.repository";
+import { UserRepository } from "@src/core/user/infra/repositories/user.repository";
 import { AuthGuard } from "@src/middlewares/authGuard";
 import { Router } from "express";
 
 export const companyUserRoutes = Router();
 
 const companyUserRepository = new CompanyUserRepository();
+const userRepository = new UserRepository();
 
 const authGuard = new AuthGuard();
 
 companyUserRoutes.post("/", authGuard.authenticate, async (req, res) => {
-  const storeUseCase = new StoreCompanyUserUseCase(companyUserRepository);
+  const storeUseCase = new StoreCompanyUserUseCase(
+    companyUserRepository,
+    userRepository
+  );
 
-  const output = await storeUseCase.execute({ ...req.body });
+  const output = await storeUseCase.execute({
+    ...req.body,
+    companyId: req.user.companyUser.companyId,
+  });
 
   return res.status(201).json(output);
 });
@@ -39,10 +47,13 @@ companyUserRoutes.get("/:id", async (req, res) => {
   return res.status(200).json(output);
 });
 
-companyUserRoutes.get("/", async (req, res) => {
+companyUserRoutes.get("/", authGuard.authenticate, async (req, res) => {
   const getAllUseCase = new GetAllCompanyUserUseCase(companyUserRepository);
 
-  const output = await getAllUseCase.execute(req.query);
+  const output = await getAllUseCase.execute(
+    req.query,
+    req.user.companyUser.companyId
+  );
 
   return res.status(200).json(output);
 });

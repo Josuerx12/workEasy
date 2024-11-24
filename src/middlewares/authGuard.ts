@@ -14,7 +14,7 @@ export class AuthGuard {
     verify(token, process.env.SECRET, async (err, decodedToken: any) => {
       if (err) {
         console.log(err);
-        throw new Error("Token invalido!");
+        return res.status(401).json({ error: "Token informado é invalido!" });
       } else {
         const user = await db.user.findUnique({
           where: { id: decodedToken.user.id },
@@ -24,7 +24,12 @@ export class AuthGuard {
             avatar: true,
             avatarId: true,
             companyRequester: true,
-            companyUser: true,
+            companyUser: {
+              include: {
+                company: true,
+                companyUserRole: true,
+              },
+            },
             createdAt: true,
             deletedAt: true,
             email: true,
@@ -36,7 +41,15 @@ export class AuthGuard {
           },
         });
 
+        if (!user) {
+          return res.status(401).json({
+            error:
+              "Não foi localizado um usuário para o token informado, refaça o login para continuar!",
+          });
+        }
+
         const userEntity = user ? UserModelMapper.toEntity(user) : null;
+
         req.user = userEntity?.toJSON();
 
         next();

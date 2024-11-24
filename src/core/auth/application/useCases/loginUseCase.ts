@@ -23,16 +23,7 @@ export class LoginUseCase implements UseCase<LoginInput, AuthOutput> {
       throw new Error("Dados incorretos, tente novamente!");
     }
 
-    const userEntity = new UserEntity({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      moderator: user.moderator,
-      support: user.support,
-      admin: user.admin,
-    });
-
-    const userOutput = UserOutputMapper.toOutput(userEntity);
+    const userOutput = UserOutputMapper.toOutput(user);
 
     const token = sign({ user: userOutput }, process.env.SECRET);
 

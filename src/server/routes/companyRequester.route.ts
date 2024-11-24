@@ -3,6 +3,7 @@ import { GetCompanyRequesterUseCase } from "@src/core/companyRequester/applicati
 import { StoreCompanyRequesterUseCase } from "@src/core/companyRequester/application/useCases/storeCompanyRequesterUseCase";
 import { UpdateCompanyRequesterUseCase } from "@src/core/companyRequester/application/useCases/updateCompanyRequesterUseCase";
 import { CompanyRequesterRepository } from "@src/core/companyRequester/infra/repositories/companyRequester.repository";
+import { UserRepository } from "@src/core/user/infra/repositories/user.repository";
 import { AuthGuard } from "@src/middlewares/authGuard";
 import upload from "@src/middlewares/multerMiddleware";
 import { Router } from "express";
@@ -10,6 +11,7 @@ import { Router } from "express";
 export const companyRequesterRoutes = Router();
 
 const companyRequesterRepository = new CompanyRequesterRepository();
+const userRepository = new UserRepository();
 
 const authGuard = new AuthGuard();
 
@@ -19,10 +21,15 @@ companyRequesterRoutes.post(
   upload.single("avatar"),
   async (req, res) => {
     const storeUseCase = new StoreCompanyRequesterUseCase(
-      companyRequesterRepository
+      companyRequesterRepository,
+      userRepository
     );
 
-    const output = await storeUseCase.execute({ ...req.body, file: req.file });
+    const output = await storeUseCase.execute({
+      ...req.body,
+      companyId: req.user.companyUser.companyId,
+      file: req.file,
+    });
 
     return res.status(201).json(output);
   }
@@ -55,12 +62,15 @@ companyRequesterRoutes.get("/:id", async (req, res) => {
   return res.status(200).json(output);
 });
 
-companyRequesterRoutes.get("/", async (req, res) => {
+companyRequesterRoutes.get("/", authGuard.authenticate, async (req, res) => {
   const getAllUseCase = new GetAllCompanyRequesterUseCase(
     companyRequesterRepository
   );
 
-  const output = await getAllUseCase.execute(req.query);
+  const output = await getAllUseCase.execute({
+    ...req.query,
+    companyId: req.user.companyUser.companyId,
+  });
 
   return res.status(200).json(output);
 });

@@ -52,7 +52,7 @@ model company {
   companyUser         companyUser[]
   companyRequester    companyRequester[]
   companyTaskCategory companyTaskCategory[]
-  companyClient       companyClient[]
+  companyCustomer     companyCustomer[]
 
   @@unique([document, email])
   @@map("companies")
@@ -186,13 +186,13 @@ model address {
   state        String
   cep          String
 
-  lat           String?
-  long          String?
-  companyClient companyClient[]
-  company       company[]
+  lat             String?
+  long            String?
+  companyCustomer companyCustomer[]
+  company         company[]
 }
 
-model companyClient {
+model companyCustomer {
   id           String @id
   companyId    String
   addressId    String
@@ -200,9 +200,14 @@ model companyClient {
   phone        String
   documentType String
   document     String
+  email        String
 
   company company @relation(fields: [companyId], references: [id])
   address address @relation(fields: [addressId], references: [id])
 
-  @@unique([companyId, document])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+  deletedAt DateTime?
+
+  @@unique([companyId, document, email])
 }

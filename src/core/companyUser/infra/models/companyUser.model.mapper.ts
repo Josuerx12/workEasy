@@ -43,7 +43,7 @@ export class CompanyUserModelMapper {
       companyId: model.companyId,
       lat: model.lat,
       long: model.long,
-      user: model.user ? UserModelMapper.toEntity(model.avatar) : null,
+      user: model.user ? UserModelMapper.toEntity(model.user) : null,
       company: model.company
         ? CompanyModelMapper.toEntity(model.company)
         : null,

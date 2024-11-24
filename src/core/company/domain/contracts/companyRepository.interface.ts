@@ -3,7 +3,11 @@ import { CompanyEntity } from "../entities/company.entity";
 import { OutputParams } from "@src/core/shared/reporitory/outputParams";
 import { InputParams } from "@src/core/shared/reporitory/inputParams";
 
-export type CompanyFilter = string;
+export type CompanyFilter = {
+  search?: string;
+  uf?: string;
+  city?: string;
+};
 
 export class CompanyInputParams extends InputParams<CompanyFilter> {}
 

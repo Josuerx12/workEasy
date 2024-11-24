@@ -1,4 +1,5 @@
 import { CompanyEntity } from "@src/core/company/domain/entities/company.entity";
+import { CompanyCustomerEntity } from "@src/core/companyCustomer/domain/entities/companyCustomer.entity";
 import { Entity } from "@src/core/shared/entity/entity";
 import { Uuid } from "@src/core/shared/valueObjects/uuid.vo";
 
@@ -15,7 +16,7 @@ export type AddressEntityProps = {
   long?: string;
 
   company?: CompanyEntity[];
-  companyClient?: any[];
+  companyCustomer?: CompanyCustomerEntity[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -35,7 +36,7 @@ export class AddressEntity extends Entity {
   long?: string;
 
   company?: CompanyEntity[];
-  companyClient?: any[];
+  companyCustomer?: CompanyCustomerEntity[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -53,7 +54,7 @@ export class AddressEntity extends Entity {
     this.lat = props.lat;
     this.long = props.long;
     this.company = props.company;
-    this.companyClient = props.companyClient;
+    this.companyCustomer = props.companyCustomer;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.deletedAt = props.deletedAt;
@@ -73,7 +74,7 @@ export class AddressEntity extends Entity {
       lat: this.lat,
       long: this.long,
       company: this.company?.map((c) => c.toJSON()),
-      companyClient: this.companyClient?.map((cc) => cc.toJSON()),
+      companyCustomer: this.companyCustomer?.map((cc) => cc.toJSON()),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,

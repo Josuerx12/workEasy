@@ -28,7 +28,7 @@ export class AddressModelMapper {
       lat: model.lat,
       long: model.long,
       company: model.company,
-      companyClient: model.companyClient,
+      companyCustomer: model.companyCustomer,
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,

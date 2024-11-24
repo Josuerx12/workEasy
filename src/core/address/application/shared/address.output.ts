@@ -1,5 +1,9 @@
 import { CompanyOutput } from "@src/core/company/application/shared/company.output";
 import { AddressEntity } from "../../domain/entities/address.entity";
+import {
+  CompanyCustomerOutput,
+  CompanyCustomerOutputMapper,
+} from "@src/core/companyCustomer/application/shared/companyCustomer.output";
 
 export type AddressOutput = {
   id: string;
@@ -12,7 +16,7 @@ export type AddressOutput = {
   lat: string;
   long: string;
   company: CompanyOutput[];
-  companyClient: any[];
+  companyCustomer: CompanyCustomerOutput[];
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -21,6 +25,12 @@ export type AddressOutput = {
 
 export class AddressOutputMapper {
   static toOutput(addressEntity: AddressEntity): AddressOutput {
-    return addressEntity ? addressEntity.toJSON() : null;
+    const { companyCustomer } = addressEntity;
+    return {
+      ...addressEntity.toJSON(),
+      companyCustomer: companyCustomer
+        ? companyCustomer.map((cc) => CompanyCustomerOutputMapper.toOutput(cc))
+        : null,
+    };
   }
 }

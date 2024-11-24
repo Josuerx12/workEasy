@@ -21,7 +21,10 @@ companyTaskCategoryRoutes.post(
       companyTaskCategoryRepository
     );
 
-    const output = await storeUseCase.execute(req.body);
+    const output = await storeUseCase.execute({
+      ...req.body,
+      companyId: req.user.companyUser.companyId,
+    });
 
     return res.status(201).json(output);
   }
@@ -54,12 +57,15 @@ companyTaskCategoryRoutes.get("/:id", async (req, res) => {
   return res.status(200).json(output);
 });
 
-companyTaskCategoryRoutes.get("/", async (req, res) => {
+companyTaskCategoryRoutes.get("/", authGuard.authenticate, async (req, res) => {
   const getAllUseCase = new GetAllCompanyTaskCategoryUseCase(
     companyTaskCategoryRepository
   );
 
-  const output = await getAllUseCase.execute(req.query);
+  const output = await getAllUseCase.execute({
+    ...req.query,
+    companyId: req.user.companyUser.companyId,
+  });
 
   return res.status(200).json(output);
 });

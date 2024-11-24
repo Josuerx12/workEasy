@@ -7,10 +7,10 @@ import { UserEntity } from "@src/core/user/domain/entities/user.entity";
 export type CompanyRequesterEntityProps = {
   id?: string;
   companyId: string;
-  userId: string;
+  userId?: string;
 
   company?: CompanyEntity;
-  user?: UserEntity;
+  user: UserEntity;
   tasks?: TaskEntity[];
 
   createdAt?: Date;
@@ -36,7 +36,9 @@ export class CompanyRequesterEntity extends Entity {
 
     this.id = new Uuid(props.id);
     this.companyId = new Uuid(props.companyId);
-    this.userId = new Uuid(props.userId);
+    this.userId = props.userId
+      ? new Uuid(props.userId)
+      : props.user && props.user.id;
 
     this.company = props.company;
     this.user = props.user;

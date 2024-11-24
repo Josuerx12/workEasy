@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { AvatarModelMapper } from "src/core/avatar/infra/models/avatar.model.mapper";
 import { CompanyModelMapper } from "@src/core/company/infra/models/company.model.mapper";
+import { CompanyUserModelMapper } from "@src/core/companyUser/infra/models/companyUser.model.mapper";
 
 export class UserModelMapper {
   static toModel(user: UserEntity): Prisma.userCreateInput {
@@ -33,6 +34,7 @@ export class UserModelMapper {
       avatar: model.avatar,
       avatarId: model.avatarId,
       moderator: model.moderator,
+      password: model.password,
       support: model.support,
       company: model.company
         ? model.company?.map((company) => CompanyModelMapper.toEntity(company))
@@ -44,7 +46,7 @@ export class UserModelMapper {
         : null,
       companyUser: model.companyUser
         ? model.companyUser?.map((companyUser) =>
-            CompanyModelMapper.toEntity(companyUser)
+            CompanyUserModelMapper.toEntity(companyUser)
           )
         : null,
       createdAt: model.createdAt,
